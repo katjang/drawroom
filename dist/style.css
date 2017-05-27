@@ -1,0 +1,130 @@
+*{
+    box-sizing: border-box;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    color: #BABABA;
+}
+.box{
+    padding: 10px;
+}
+input{
+    color: #2B2B2B;
+}
+body{
+    margin: 0;
+    padding: 0;
+}
+.server-message{
+    color: #C47431;
+}
+.messages > div{
+    width: 100%;
+    display: block;
+    padding: 3px 6px;
+}
+.messages{
+    overflow: auto;
+}
+.bordered{
+    border: 1px solid #BABABA;
+}
+.container{
+    width: 100vw;
+    height: 100vh;
+}
+button{
+    border: none;
+    outline: none;
+    background-color: #BABABA;
+    color: #2B2B2B;
+}
+#chat {
+    height: 100vh;
+    width: 300px;
+    padding: 15px;
+    background-color: #2B2B2B;
+}
+.flex{
+    display: flex;
+}
+.flex--justify-center{
+    justify-content: center;
+}
+.flex--align-center{
+    align-items: center;
+}
+.flex--center{
+    justify-content: center;
+    align-items: center;
+}
+.flex__item{
+    flex: 1;
+}
+.flex--collumn{
+    flex-direction: column;
+}
+.messageInput{
+    height: 30px;
+    flex-shrink: 0;
+}
+.colorSelector{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    display: none;
+    background-color: #2B2B2B;
+}
+.colorDisplay{
+    width: 30px;
+    height: 30px;
+}
+.colorSelector img{
+    width: 230px;
+    height: 100px;
+    color: white;
+}
+canvas{
+    cursor: default;
+    position: absolute;
+    left: 0;
+    right: 0;
+
+}
+#sidebar{
+    width: 100px;
+    background-color: #2B2B2B;
+}
+#toolbar, #settingmenu{
+    border-bottom: 1px solid #BABABA;
+    padding: 10px;
+}
+.red-display, .green-display, .blue-display{
+    align-items: center;
+}
+.tool, .setting{
+    background-color: #BABABA;
+    margin: 5px 0;
+    text-align: center;
+    cursor: pointer;
+}
+.tool span, .setting span{
+    color: #2B2B2B;
+}
+#sidebar h3{
+    margin: 0;
+    font-size: 16px;
+    text-align: center;
+    display: block;
+}
+#drawWrapper{
+    position: relative;
+}
+#helpCanvas{
+    z-index: 1;
+    pointer-events: none;
+}
+.selected-tool{
+    background-color: #C47431;
+}

@@ -1,0 +1,50 @@
+<head>
+    <link type="text/css" href="/dist/style.css" rel="stylesheet">
+</head>
+<body>
+<!--<input type="number" id="width">-->
+<!--<input type="number" id="height">-->
+<div class="container flex">
+    <div id="chat" class="flex flex--collumn">
+        <div class="messages flex__item bordered"></div>
+        <div class="flex messageInput">
+            <input src="text" class="flex__item">
+            <button id="sendMessage">send</button>
+        </div>
+    </div>
+    <div class="flex__item" id="drawWrapper">
+        <canvas id="canvas">
+
+        </canvas>
+        <canvas id="helpCanvas">
+
+        </canvas>
+    </div>
+    <div id="sidebar" class="box">
+        <div id="toolbar">
+            <h3>Tools</h3>
+        </div>
+        <div id="settingmenu">
+            <h3>Settings</h3>
+        </div>
+    </div>
+    <div class="colorSelector box bordered">
+        <img src="/dist/gradient.png">
+        <div class="flex box">
+            <span class="flex__item flex flex--align-center">R: <strong class="red-display"></strong></span>
+            <span class="flex__item flex flex--align-center">G: <strong class="green-display"></strong></span>
+            <span class="flex__item flex flex--align-center">B: <strong class="blue-display"></strong></span>
+            <div class="colorDisplay flex__item"></div>
+            <div class="selectedColorDisplay flex__item"></div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    let socket = io();
+</script>
+<script src="/dist/bundle.js"></script>
+</body>

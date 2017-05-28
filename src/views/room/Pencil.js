@@ -1,16 +1,17 @@
+
 import Tool from "./Tool";
 
-class Eraser extends Tool{
+class Pencil extends Tool{
     constructor(canvas){
-        super(canvas, 'eraser');
+        super(canvas, 'pencil');
     }
     canvasMouseMoveHandler(e) {
-        if (this.holdingMouse) {
+        if (this.dragging) {
             let indices = this.canvas.inputToPixelIndex(e.detail.event);
             if(indices){
-                this.canvas.updatePixel(indices.x, indices.y, 0);
+                this.canvas.updatePixel(indices.x, indices.y, this.canvas.selectedColor);
             }
         }
     };
 }
-export default Eraser;
+export default Pencil;

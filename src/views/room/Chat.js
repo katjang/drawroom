@@ -1,4 +1,4 @@
-import DataStreamHandler from "./DataStreamHandler";
+import DataStreamHandler from "../../DataStreamHandler";
 
 class Chat{
     constructor(){
@@ -8,10 +8,13 @@ class Chat{
         $('input', this.el).on('keydown', (e) => this.handleKeyPress(e));
     }
     sendMessage(){
-        let input = $('input', this.el);
-        DataStreamHandler.sendMessage(input.val());
-        $('.messages', this.el).append($('<div>').append($('<span>').text("you: " + input.val())));
-        input.val('');
+        let input = $('input[type=text]', this.el);
+        if(input.val() != ''){
+            DataStreamHandler.sendMessage(input.val());
+            $('.messages', this.el).append($('<div>').append($('<span>').text("you: " + input.val())));
+            input.val('');
+        }
+        $('.messages', this.el).scrollTop($('.messages', this.el)[0].scrollHeight);
     }
     handleKeyPress(e){
         if(e.keyCode == 13){
@@ -24,6 +27,7 @@ class Chat{
 
 
         $('.messages', this.el).append($('<div>').append($('<span>', {class: type=='server'? 'server-message' : ''}).text(message)));
+        $('.messages', this.el).scrollTop($('.messages', this.el)[0].scrollHeight);
     }
 }
 export default Chat;

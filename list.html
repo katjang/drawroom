@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Room List</title>
+    <link type="text/css" href="/dist/style.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="list-view">
+
+</div>
+<div class="create-new flex">
+    <label for="roomName">New room:</label>
+    <input type="text" name="roomName" id="roomName" class="flex__item">
+    <input type="button"  class="my-button" name="createNew" id="createNew" value="create">
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    let socket = io();
+</script>
+<script src="/dist/bundle.js"></script>
+</body>
+</html>

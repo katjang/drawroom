@@ -4,18 +4,19 @@ import HelpLines from "./HelpLines";
 class SettingMenu {
     constructor(canvas) {
         this.el = $('#settingmenu');
-        this.settings = {};
+        this.settings = new Map();
 
         let color = new ColorSelector(canvas);
         let helpLines = new HelpLines(canvas);
 
-        this.settings[color.name] = color;
-        this.settings[helpLines.name] = helpLines;
+        this.settings.set(color.name, color);
+        this.settings.set(helpLines.name, helpLines);
 
-        for (let setting in this.settings){
-            this.el.append(this.settings[setting].el);
+
+        for (let setting of this.settings.values()) {
+            this.el.append(setting.el);
         }
-        this.toggleSetting(this.settings[helpLines.name]);
+        this.toggleSetting(helpLines);
 
         this.el[0].addEventListener('click', (e) => this.handleClick(e));
     }
@@ -23,7 +24,7 @@ class SettingMenu {
     handleClick(e) {
         let target = $(e.target).hasClass('setting') ? $(e.target) : ($(e.target).parents('.setting').length) ? $(e.target).parents('.setting') : false;
         if (target) {
-            let setting = this.settings[target.attr('data-name').replace('data-', '')];
+            let setting = this.settings.get(target.attr('data-name').replace('data-', ''));
             this.toggleSetting(setting);
         }
     }

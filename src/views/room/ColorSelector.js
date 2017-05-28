@@ -1,19 +1,23 @@
 import CanvasSetting from "./CanvasSetting";
-import HelpFunctions from "./HelpFunctions";
+import HelpFunctions from "../../HelpFunctions";
 
 class ColorSelector extends CanvasSetting{
     constructor(canvas){
         super(canvas, 'color');
         this.selectEl = $('.colorSelector');
-        let image = $('img', this.selectEl);
+        this.image = $('img', this.selectEl);
 
+        setTimeout(() => this.initialiseColorSelector(), 100);
+
+    }
+    initialiseColorSelector(){
         this.selectColorCanvas = document.createElement('canvas');
-        this.selectColorCanvas.width = image.width();
-        this.selectColorCanvas.height = image.height();
-        this.selectColorCanvas.getContext('2d').drawImage(image[0], 0, 0, image.width(), image.height());
+        this.selectColorCanvas.width = this.image.width();
+        this.selectColorCanvas.height = this.image.height();
+        this.selectColorCanvas.getContext('2d').drawImage(this.image[0], 0, 0, this.image.width(), this.image.height());
 
-        image.on('mousemove', (e) => this.hoverHandler(e));
-        image.on('click', (e) => this.clickHandler(e));
+        this.image.on('mousemove', (e) => this.hoverHandler(e));
+        this.image.on('click', (e) => this.clickHandler(e));
     }
     clickHandler(e){
         let pixelData = this.selectColorCanvas.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data;
@@ -33,16 +37,5 @@ class ColorSelector extends CanvasSetting{
         this.el.toggleClass('selected-tool');
         this.active = !this.active;
     }
-    canvasMouseMoveHandler(e) {
-        return;
-    };
-
-    canvasMouseDownHandler(e) {
-        return;
-    };
-
-    canvasMouseUpHandler(e) {
-        return;
-    };
 }
 export default ColorSelector;

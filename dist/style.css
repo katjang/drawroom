@@ -14,6 +14,7 @@ input{
 body{
     margin: 0;
     padding: 0;
+    background-color: #2B2B2B;
 }
 .server-message{
     color: #C47431;
@@ -32,12 +33,6 @@ body{
 .container{
     width: 100vw;
     height: 100vh;
-}
-button{
-    border: none;
-    outline: none;
-    background-color: #BABABA;
-    color: #2B2B2B;
 }
 #chat {
     height: 100vh;
@@ -90,7 +85,9 @@ canvas{
     position: absolute;
     left: 0;
     right: 0;
-
+}
+#canvas{
+    background-color: white;
 }
 #sidebar{
     width: 100px;
@@ -127,4 +124,42 @@ canvas{
 }
 .selected-tool{
     background-color: #C47431;
+}
+/*----------------------------------------------------------LIST------------------------------------------------------*/
+.list-view, .create-new{
+    width: 500px;
+    margin: 10px auto;
+    border: 5px solid #BABABA;
+}
+.create-new{
+    font-size: 20px;
+    padding: 20px;
+}
+.room--list{
+    font-size: 30px;
+    padding: 20px;
+    cursor: pointer;
+}
+.room--list:not(:last-child){
+    border-bottom: 5px solid #BABABA;
+}
+
+.create-new input[type=text]{
+    height: 30px;
+    font-size: 20px;
+    vertical-align: middle;
+}
+.room--list:hover{
+    background-color: #3C3F41;
+}
+.my-button{
+    border: 2px solid #BABABA;
+    background-color: #2B2B2B;
+    cursor: pointer;
+    outline: none;
+    color: #BABABA;
+}
+.my-button:hover{
+    background-color: #3C3F41;
+    outline: none;
 }

@@ -8,9 +8,13 @@ class HelpFunctions {
     static rgbToHex(r, g, b) {
         return "#" + HelpFunctions.componentToHex(r) + HelpFunctions.componentToHex(g) + HelpFunctions.componentToHex(b);
     }
+    //===================from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb=====================
+
     static isEven(i){
         return (i % 2 == 0);
     }
-    //===================from https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb=====================
+    static makeEven(i){
+        return this.isEven(i)? i : i-1;
+    }
 }
 export default HelpFunctions

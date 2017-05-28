@@ -3,6 +3,7 @@ import ToggleTool from "./CanvasSetting";
 class HelpLines extends ToggleTool{
     constructor(canvas){
         super(canvas, 'Helplines');
+        document.addEventListener('canvasRedraw', () => this.drawHelpLines());
     }
     onClick(e){
         this.el.toggleClass('selected-tool');
@@ -14,6 +15,9 @@ class HelpLines extends ToggleTool{
         }
     }
     drawHelpLines() {
+        if(!this.active){
+            return;
+        }
         let c = this.canvas.helpCanvas[0];
         let ctx = c.getContext("2d");
         ctx.beginPath();
@@ -27,7 +31,7 @@ class HelpLines extends ToggleTool{
         }
         ctx.stroke();
         ctx.closePath();
-        // dit is echt lelijk
+        // dit is echt lelijk moet ik misschien anders oplossen
     };
     removeHelpLines(){
         this.canvas.clearCanvas(this.canvas.helpCanvas);

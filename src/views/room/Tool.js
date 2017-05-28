@@ -13,12 +13,12 @@ class Tool {
     };
 
     canvasMouseDownHandler(e) {
-        this.holdingMouse = true;
+        this.dragging = true;
         this.canvasMouseMoveHandler(e);
     };
 
     canvasMouseUpHandler(e) {
-        this.holdingMouse = false;
+        this.dragging = false;
     };
 }
 export default Tool;

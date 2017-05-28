@@ -2,11 +2,14 @@ class DataStreamHandler{
     constructor(){
         this.socket = socket;
         this.updatedPixels = [];
-        let room = window.location.href.slice(window.location.href.search(/[^\/]+$/));
-        this.socket.emit('join', room);
         this.socket.addEventListener('pullPixelsFromServer', (e) => this.handleServerPixels(e));
         this.socket.addEventListener('serverMessage', (e) => this.handleMessage(e, 'server'));
-        this.socket.addEventListener('message', (e) => this.handleMessage(e, 'user'))
+        this.socket.addEventListener('message', (e) => this.handleMessage(e, 'user'));
+        this.socket.addEventListener('roomsList', (e) => this.handleRoomsList(e));
+        document.addEventListener('unload', () => this.handleClosePage());
+    }
+    joinRoom(room){
+        this.socket.emit('join', room);
     }
     handleMessage(e, type){
         let event = new CustomEvent("receivedMessage", {
@@ -37,11 +40,24 @@ class DataStreamHandler{
         this.socket.emit('pushPixelsToServer', this.updatedPixels);
         this.updatedPixels = [];
     };
-    createJSON(){
-
+    requestRoomsList(){
+        this.socket.emit('requestRooms');
     }
-    parseJSON(){
 
+    handleRoomsList(e){
+        let map = new Map();
+        Object.keys(e).forEach(key => {
+            map.set(key, e[key]);
+        });
+        let event = new CustomEvent("updateRooms", {
+            detail: {
+                rooms: map
+            }
+        });
+        document.dispatchEvent(event);
+    }
+    handleClosePage(){
+        this.socket.emit('disconnect');
     }
 }
 export default (new DataStreamHandler);

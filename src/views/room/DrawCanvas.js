@@ -1,44 +1,51 @@
-import DataStreamHandler from "./DataStreamHandler";
-import Helpfunctions from "./HelpFunctions";
+import DataStreamHandler from "../../DataStreamHandler";
+import HelpFunctions from "../../HelpFunctions";
+import CanvasInputHandler from "../../CanvasInputHandler";
 
 class DrawCanvas {
     constructor() {
-        this.scale = 4;
+        let room = window.location.href.slice(window.location.href.search(/[^\/]+$/));
+        DataStreamHandler.joinRoom(room);
+
+        this.scale = 5;
         this.height = 100; // how many pixels on the Y axis
         this.width = 200; //  how many pixels on the x axis
         this.pixels = [];
         this.selectedColor = '#000000';
-        this.holdingMouse = false;
+        this.dragging = false;
         for (let i = 0; i < this.width; i++) {
             this.pixels[i] = [];
             for (let j = 0; j < this.height; j++) {
                 this.pixels[i][j] = 0;
             }
         }
-        document.addEventListener('updatePixels', (e) => this.handleNewPixelData(e));
+        document.addEventListener('updatePixels', (e) => this.updateNewPixels(e));
+        document.addEventListener('canvasRedraw', () => this.canvasRedraw());
+        document.addEventListener('canvasZoomIn', () => this.zoomIn());
+        document.addEventListener('canvasZoomOut', () => this.zoomOut());
+        document.addEventListener('canvasReposition', (e) => this.reposition(e));
 
         this.el = $('#drawWrapper');
         this.canvas = $('#canvas');
         this.helpCanvas = $('#helpCanvas');
-        this.canvas.attr('width', this.canvas.parent().width());
-        this.canvas.attr('height', this.canvas.parent().height());
-        this.helpCanvas.attr('width', this.canvas.parent().width());
-        this.helpCanvas.attr('height', this.canvas.parent().height());
+        this.canvas.attr('width', HelpFunctions.makeEven(this.canvas.parent().width()));
+        this.canvas.attr('height', HelpFunctions.makeEven(this.canvas.parent().height()));
+        this.helpCanvas.attr('width', HelpFunctions.makeEven(this.canvas.parent().width()));
+        this.helpCanvas.attr('height', HelpFunctions.makeEven(this.canvas.parent().height()));
 
-        this.canvas.on('mousedown', (e) => this.canvasMouseDownHandler(e));
-        this.canvas.on('mouseup', (e) => this.canvasMouseUpHandler(e));
-        this.canvas.on('mousemove', (e) => this.canvasMouseMoveHandler(e));
-        this.canvas.on('contextmenu', function(){ return false; });
+        new CanvasInputHandler(this.canvas);
+
         this.position = {
             x: this.canvas.width() / 2 - this.width * this.scale / 2,
             y: this.canvas.height() / 2 - this.height * this.scale / 2
         };
         let ctx = this.canvas[0].getContext('2d');
         ctx.imageSmoothingEnabled = false;
+
         this.drawOutlining();
     };
 
-    handleNewPixelData(e) {
+    updateNewPixels(e) {
         for(let i = 0; i < e.detail.pixels.length; i ++){
             if(e.detail.pixels[i].color == 0){
                 this.clearPixel(e.detail.pixels[i].x, e.detail.pixels[i].y);
@@ -48,7 +55,20 @@ class DrawCanvas {
             this.pixels[e.detail.pixels[i].x][e.detail.pixels[i].y] = e.detail.pixels[i].color;
         }
     }
+    canvasRedraw(){
+        this.clearCanvas(this.canvas);
+        this.clearCanvas(this.helpCanvas);
 
+        for (let i = 0; i < this.width; i++) {
+            for (let j = 0; j < this.height; j++) {
+                if(this.pixels[i][j] != 0){
+                    this.fillPixel(i, j, this.pixels[i][j], this.canvas);
+                }
+
+            }
+        }
+        this.drawOutlining();
+    }
     updatePixel(x, y, color) {
         if(this.pixels[x][y] != color){
             if(color != 0){
@@ -106,33 +126,34 @@ class DrawCanvas {
     setSelectedColor(color){
         this.selectedColor = color;
     }
-
-    canvasMouseMoveHandler(e) {
-        let event = new CustomEvent("canvasMouseMove", {
-            detail: {
-                event: e
-            }
-        });
-        document.dispatchEvent(event);
-    };
-
-    canvasMouseDownHandler(e) {
-        let event = new CustomEvent("canvasMouseDown", {
-            detail: {
-                event: e
-            }
-        });
-        document.dispatchEvent(event);
-    };
-
-    canvasMouseUpHandler(e) {
-        let event = new CustomEvent("canvasMouseUp", {
-            detail: {
-                event: e
-            }
-        });
-        document.dispatchEvent(event);
-    };
+    zoomIn(){
+        if (this.scale <= 20) {
+            this.scale += 1;
+            this.reposition(
+                {
+                    detail: {
+                        relativeX: ( this.width * (this.scale-1) - this.width * this.scale) / 2,
+                        relativeY:( this.height * (this.scale-1) - this.height * this.scale) / 2
+                    }
+                });
+        }
+    }
+    zoomOut(){
+        if(this.scale > 2){
+            this.scale -= 1;
+            this.reposition(
+                {
+                    detail: {
+                        relativeX: ( this.width * (this.scale+1) - this.width * this.scale) / 2,
+                        relativeY:( this.height * (this.scale+1) - this.height * this.scale) / 2
+                    }
+                });
+        }
+    }
+    reposition(e){
+        this.position.x += e.detail.relativeX;
+        this.position.y += e.detail.relativeY;
+    }
 }
 
 export default DrawCanvas;

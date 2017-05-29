@@ -7,7 +7,7 @@ class ColorSelector extends CanvasSetting{
         this.selectEl = $('.colorSelector');
         this.image = $('img', this.selectEl);
 
-        setTimeout(() => this.initialiseColorSelector(), 100);
+        setTimeout(() => this.initialiseColorSelector(), 1000);
 
     }
     initialiseColorSelector(){

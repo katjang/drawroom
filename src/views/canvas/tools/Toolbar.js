@@ -18,9 +18,9 @@ class Toolbar {
         this.selectTool(pencil);
 
         this.el[0].addEventListener('click', (e) => this.handleClick(e));
-        document.addEventListener('canvasMouseMove', (e) => this.selectedTool.canvasMouseMoveHandler(e));
-        document.addEventListener('canvasMouseDown', (e) => this.selectedTool.canvasMouseDownHandler(e));
-        document.addEventListener('canvasMouseUp', (e) => this.selectedTool.canvasMouseUpHandler(e));
+        App.events.on('canvasMouseMove', (e) => this.selectedTool.canvasMouseMoveHandler(e));
+        App.events.on('canvasMouseDown', (e) => this.selectedTool.canvasMouseDownHandler(e));
+        App.events.on('canvasMouseUp', (e) => this.selectedTool.canvasMouseUpHandler(e));
     }
 
     handleClick(e) {

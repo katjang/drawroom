@@ -4,11 +4,11 @@ class RoomList {
         this.el = $('.list-view');
         DataStreamHandler.requestRoomsList();
         this.el.on('click', this.joinRoom);
-        document.addEventListener('updateRooms', (e)=> this.updateRoomList(e));
+        App.events.on('updateRooms', (e)=> this.updateRoomList(e));
     }
-    updateRoomList(e){
+    updateRoomList(rooms){
         let hide = true;
-        for (let [name, room] of e.detail.rooms.entries()) {
+        for (let [name, room] of rooms.entries()) {
             let listItem = $('<div>', {class: 'room--list'}).append('<span>').text(name + ' ' + room.length);
             listItem.attr('data-name', name);
             this.el.append(listItem);

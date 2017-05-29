@@ -7,7 +7,7 @@ class Pencil extends Tool{
     }
     canvasMouseMoveHandler(e) {
         if (this.dragging) {
-            let indices = this.canvas.inputToPixelIndex(e.detail.event);
+            let indices = this.canvas.inputToPixelIndex(e);
             if(indices){
                 this.canvas.updatePixel(indices.x, indices.y, this.canvas.selectedColor);
             }

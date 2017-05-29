@@ -12,21 +12,10 @@ class DataStreamHandler{
         this.socket.emit('join', room);
     }
     handleMessage(e, type){
-        let event = new CustomEvent("receivedMessage", {
-            detail: {
-                type: type,
-                message: e
-            }
-        });
-        document.dispatchEvent(event);
+        App.events.trigger("receivedMessage", {message: e, type: type});
     }
     handleServerPixels(e){
-        let event = new CustomEvent("updatePixels", {
-            detail: {
-                pixels: e
-            }
-        });
-        document.dispatchEvent(event);
+        App.events.trigger("updatePixels", e);
     }
     sendMessage(message){
         this.socket.emit('message', message);
@@ -49,12 +38,7 @@ class DataStreamHandler{
         Object.keys(e).forEach(key => {
             map.set(key, e[key]);
         });
-        let event = new CustomEvent("updateRooms", {
-            detail: {
-                rooms: map
-            }
-        });
-        document.dispatchEvent(event);
+        App.events.trigger("updateRooms", map);
     }
     handleClosePage(){
         this.socket.emit('disconnect');

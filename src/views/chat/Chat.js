@@ -3,7 +3,7 @@ import DataStreamHandler from "../../DataStreamHandler";
 class Chat{
     constructor(){
         this.el = $('#chat');
-        document.addEventListener('receivedMessage', (e) => this.handleMessage(e));
+        App.events.on('receivedMessage', (e) => this.handleMessage(e));
         $('#sendMessage', this.el).on('click', this.sendMessage);
         $('input', this.el).on('keydown', (e) => this.handleKeyPress(e));
         $(window).hover(function(event) {
@@ -25,8 +25,8 @@ class Chat{
         }
     }
     handleMessage(e){
-        let message = e.detail.message;
-        let type = e.detail.type;
+        let message = e.message;
+        let type = e.type;
 
 
         $('.messages', this.el).append($('<div>').append($('<span>', {class: type=='server'? 'server-message' : ''}).text(message)));

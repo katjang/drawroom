@@ -3,6 +3,9 @@ import HelpLines from "./HelpLines";
 import {View} from "backbone";
 
 const SettingMenu = View.extend({
+    events: {
+        "click": "handleClick"
+    },
     initialize: function(){
         this.settings = new Map();
         let color = new ColorSelector({model: this.model});
@@ -11,14 +14,10 @@ const SettingMenu = View.extend({
         this.settings.set(color.name, color);
         this.settings.set(helpLines.name, helpLines);
 
-
         for (let setting of this.settings.values()) {
-            console.log(setting.el);
             this.el.append(setting.el[0]);
         }
         this.toggleSetting(helpLines);
-
-        this.el.addEventListener('click', (e) => this.handleClick(e));
     },
     handleClick: function(e){
         let target = $(e.target).hasClass('setting') ? $(e.target) : ($(e.target).parents('.setting').length) ? $(e.target).parents('.setting') : false;

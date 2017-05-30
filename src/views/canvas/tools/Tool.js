@@ -1,24 +1,20 @@
-class Tool {
-    constructor(canvas, name){
-        this.canvas = canvas;
-        this.name = name;
-        this.el = $('<div>', {class: 'tool'}).append($('<span>').text(name));
-        this.el.attr('data-name', this.name);
-    }
-    onClick(e){
+import {View} from "backbone";
+
+const Tool = View.extend({
+    initialize: function () {
+        this.el = $('<div>', {class: 'tool'}).append($('<span>').text(this.name));
+        this.el.attr('data-name', this.name)
+    },
+    onClick: function (e) {
         this.el.addClass('selected-tool');
+    },
+    DragHandler: function (e) {
+
+    },
+    MouseDownHandler: function (e) {
+        this.DragHandler(e);
+    },
+    MouseUpHandler: function(e) {
     }
-    canvasMouseMoveHandler(e) {
-        return;
-    };
-
-    canvasMouseDownHandler(e) {
-        this.dragging = true;
-        this.canvasMouseMoveHandler(e);
-    };
-
-    canvasMouseUpHandler(e) {
-        this.dragging = false;
-    };
-}
+});
 export default Tool;

@@ -1,18 +1,10 @@
+import CanvasLayer from "./CanvasLayer";
 
-import HelpFunctions from "../../HelpFunctions";
-import {View} from "backbone";
-
-const HelpCanvas = View.extend({
+const HelpCanvas = CanvasLayer.extend({
     initialize: function () {
-        this.$el.attr('width', HelpFunctions.makeEven(this.$el.parent().width()));
-        this.$el.attr('height', HelpFunctions.makeEven(this.$el.parent().height()));
+        CanvasLayer.prototype.initialize.apply(this, arguments);
         this.listenTo(this.model, 'change:drawHelpLines', this.canvasRedraw);
         App.events.on("canvasRedraw", () => this.canvasRedraw());
-
-        let ctx = this.el.getContext('2d');
-
-        ctx.imageSmoothingEnabled = false;
-        this.drawOutlining();
     },
     canvasRedraw: function () {
         this.clearCanvas();
@@ -38,8 +30,7 @@ const HelpCanvas = View.extend({
         ctx.closePath();
     },
     drawHelpLines() {
-        let c = this.el;
-        let ctx = c.getContext("2d");
+        let ctx = this.el.getContext("2d");
         let scale = this.model.get("scale");
         let position = this.model.get("position");
         ctx.beginPath();

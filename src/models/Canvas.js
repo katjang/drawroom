@@ -30,6 +30,19 @@ const Canvas = Model.extend({
             }
         }
         this.set("pixels", pixels);
+    },
+    inputToPixelIndex: function (offsetX, offsetY) {
+        let position = this.get("position");
+        let scale = this.get("scale");
+        if (offsetX > position.x && offsetY > position.y &&
+            offsetX < position.x + this.get("width") * scale &&
+            offsetY < position.y + this.get("height") * scale) {
+            return {
+                x: Math.floor((offsetX - position.x) / scale),
+                y: Math.floor((offsetY - position.y) / scale)
+            };
+        }
+        return false;
     }
 });
 export default Canvas;

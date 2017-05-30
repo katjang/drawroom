@@ -1,16 +1,17 @@
 import Tool from "./Tool";
 
-class Eraser extends Tool{
-    constructor(canvas){
-        super(canvas, 'eraser');
-    }
-    canvasMouseMoveHandler(e) {
-        if (this.dragging) {
-            let indices = this.canvas.inputToPixelIndex(e);
-            if(indices){
-                this.canvas.updatePixel(indices.x, indices.y, 0);
-            }
+const Eraser = Tool.extend({
+    initialize: function () {
+        this.name = 'eraser';
+        Tool.prototype.initialize.apply(this, arguments);
+    },
+    DragHandler: function (e) {
+        let indices = this.model.inputToPixelIndex(e.offsetX, e.offsetY);
+        let pixels = this.model.get("pixels");
+        if (indices) {
+            if(pixels[indices.x][indices.y] != 0)
+            App.events.trigger("toolUpdatePixels", [{x: indices.x, y: indices.y, color: 0}]);
         }
-    };
-}
+    }
+});
 export default Eraser;

@@ -5,10 +5,15 @@ class Chat{
         this.el = $('#chat');
         App.events.on('receivedMessage', (e) => this.handleMessage(e));
         $('#sendMessage', this.el).on('click', this.sendMessage);
+        App.events.on('initializeRoom', () => this.init());
+
         $('input', this.el).on('keydown', (e) => this.handleKeyPress(e));
         $(window).hover(function(event) {
             window.isActive = !event.fromElement;
         });
+    }
+    init(){
+        $('.messages', this.el).empty();
     }
     sendMessage(){
         let input = $('input[type=text]', this.el);

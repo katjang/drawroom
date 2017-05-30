@@ -6,42 +6,66 @@
     <link type="text/css" href="/dist/style.css" rel="stylesheet">
 </head>
 <body>
-<div class="container flex">
-    <div id="chat" class="flex flex--collumn">
-        <div class="messages flex__item bordered"></div>
-        <div class="flex messageInput">
-            <input type="text" class="flex__item">
-            <input type="button" id="sendMessage" value="send" class="my-button">
-        </div>
-    </div>
-    <div class="flex__item" id="drawWrapper">
-        <canvas id="canvas" class="primary">
+<div id="List-page" class="page">
+    <div class="list-view">
 
-        </canvas>
-        <canvas id="helpCanvas" class="secondary">
+    </div>
+    <div class="create-new flex">
+        <label for="roomName">New room:</label>
+        <input type="text" name="roomName" id="roomName" class="flex__item">
+        <input type="button" class="my-button" name="createNew" id="createNew" value="create">
+    </div>
+</div>
+<div id="Room-page" class="page">
+    <div class="container flex">
+        <div class="flex__item">
+            <div id="roomOverview" class="flex">
+                <div class="flex__item flex--justify--spacebetween flex--align-center flex">
+                    <button id="back-to-list" class="my-button">back</button>
+                    <h2 class="room-name"></h2>
+                </div>
+                <div id="users" class="flex__item">
 
-        </canvas>
-    </div>
-    <div id="sidebar" class="box">
-        <div id="toolbar">
-            <h3>Tools</h3>
+                </div>
+            </div>
+            <div class="flex flex__item">
+                <div id="chat" class="flex flex--collumn">
+                    <div class="messages flex__item bordered"></div>
+                    <div class="flex messageInput">
+                        <input type="text" class="flex__item">
+                        <input type="button" id="sendMessage" value="send" class="my-button">
+                    </div>
+                </div>
+                <div class="flex__item" id="drawWrapper">
+                    <canvas id="canvas" class="primary">
+
+                    </canvas>
+                    <canvas id="helpCanvas" class="secondary">
+
+                    </canvas>
+                </div>
+            </div>
         </div>
-        <div id="settingmenu">
-            <h3>Settings</h3>
+        <div id="sidebar" class="box">
+            <div id="toolbar">
+                <h3>Tools</h3>
+            </div>
+            <div id="settingMenu">
+                <h3>Settings</h3>
+            </div>
         </div>
-    </div>
-    <div class="colorSelector box bordered">
-        <img src="/dist/gradient.png">
-        <div class="flex box">
-            <span class="flex__item flex flex--align-center">R: <strong class="red-display"></strong></span>
-            <span class="flex__item flex flex--align-center">G: <strong class="green-display"></strong></span>
-            <span class="flex__item flex flex--align-center">B: <strong class="blue-display"></strong></span>
-            <div class="colorDisplay flex__item"></div>
-            <div class="selectedColorDisplay flex__item"></div>
+        <div id="colorSelector" class="box bordered">
+            <img src="/dist/gradient.png">
+            <div class="flex box">
+                <span class="flex__item flex flex--align-center">R: <strong class="red-display"></strong></span>
+                <span class="flex__item flex flex--align-center">G: <strong class="green-display"></strong></span>
+                <span class="flex__item flex flex--align-center">B: <strong class="blue-display"></strong></span>
+                <div class="colorDisplay flex__item"></div>
+                <div class="selectedColorDisplay flex__item"></div>
+            </div>
         </div>
     </div>
 </div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>

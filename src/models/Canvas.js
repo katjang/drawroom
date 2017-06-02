@@ -20,12 +20,14 @@ const Canvas = Model.extend({
         }
     },
     initialize: function () {
-        let width = this.get("width");
-        let height = this.get("height");
+        this.reset();
+        App.events.on("leaveRoom", () => this.reset());
+    },
+    reset: function(){
         let pixels = [];
-        for (let i = 0; i < width; i++) {
+        for (let i = 0; i < this.get("width"); i++) {
             pixels[i] = [];
-            for (let j = 0; j < height; j++) {
+            for (let j = 0; j < this.get("height"); j++) {
                 pixels[i][j] = 0;
             }
         }

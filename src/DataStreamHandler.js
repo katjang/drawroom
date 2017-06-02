@@ -1,6 +1,6 @@
 class DataStreamHandler{
     constructor(){
-        this.socket = socket;
+        this.socket = io();
         this.socket.addEventListener('pullPixelsFromServer', (e) => this.handleServerPixels(e));
         this.socket.addEventListener('serverMessage', (e) => this.handleMessage(e, 'server'));
         this.socket.addEventListener('message', (e) => this.handleMessage(e, 'user'));
@@ -11,6 +11,9 @@ class DataStreamHandler{
     }
     joinRoom(room){
         this.socket.emit('join', room);
+    }
+    leaveRoom(){
+        this.socket.emit('leave');
     }
     handleMessage(e, type){
         App.events.trigger("receivedMessage", {message: e, type: type});

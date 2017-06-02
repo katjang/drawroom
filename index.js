@@ -7,10 +7,8 @@ let publicRooms = {};
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
-io.on('connection', function(socket){
-    console.log('a user connected');
-});
 io.sockets.on('connection', function (socket) {
+    console.log('a user connected');
     socket.emit('roomsList', publicRooms);
     if(socket.room){
         socket.leave(socket.room);
@@ -26,7 +24,7 @@ io.sockets.on('connection', function (socket) {
         socket.room = room;
         publicRooms[room] = io.sockets.adapter.rooms[room];
         io.sockets.to(room).emit('roomDetails',  {name: room, users:publicRooms[room].sockets});
-        socket.to(room).emit('roomsList', publicRooms);
+        socket.broadcast.emit('roomsList', publicRooms);
     });
     socket.on('message', function(e){
         socket.to(socket.room).emit('message', e);
@@ -47,6 +45,13 @@ io.sockets.on('connection', function (socket) {
             publicRooms[socket.room] = io.sockets.adapter.rooms[socket.room];
         }
     });
+    socket.on('leave', function(){
+        socket.leave(socket.room);
+        io.sockets.emit('roomsList', publicRooms);
+        io.sockets.to(socket.room).emit('serverMessage', 'someone has left the room!');
+        publicRooms[socket.room] = io.sockets.adapter.rooms[socket.room];
+        io.sockets.to(socket.room).emit('roomDetails',  {name: socket.room, users:publicRooms[socket.room].sockets});
+    })
 });
 
 app.use('/dist', express.static('dist'));

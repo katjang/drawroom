@@ -3,10 +3,13 @@ import HelpCanvas from "./views/canvas/HelpCanvas";
 import Chat from "./views/chat/Chat";
 import Toolbar from "./views/canvas/tools/Toolbar";
 import SettingMenu from "./views/canvas/settings/SettingMenu";
-import RoomOverview from "./views/room/RoomOverview";
+import RoomName from "./views/room/RoomName";
+import BackButton from "./views/room/BackButton";
+import UsersInRoomList from "./views/room/UsersInRoomList";
 
-import CreateNewRoom from "./views/listView/CreateNewRoom";
-import RoomList from "./views/listView/RoomList";
+import RoomCreateButton from "./views/listView/newRoom/RoomCreateButton";
+import RoomList from "./views/listView/rooms/RoomList";
+import NewRoomInput from "./views/listView/newRoom/NewRoomInput";
 import {Events} from "backbone";
 import _ from "underscore";
 import Canvas from "./models/Canvas";
@@ -28,9 +31,13 @@ import PageHandler from "./PageHandler";
         new Toolbar({el: '#toolbar', model: canvasModel});
 
         let room = new Room();
-        new RoomOverview({el: '#roomOverview', model: room});
-        new RoomList();
-        new CreateNewRoom();
+        new RoomName({el: '#roomName', model: room});
+        new BackButton({el: "#back-to-list"});
+        new UsersInRoomList({el: "#users", model: room});
+
+        new RoomList({el: '#list-view'});
+        new RoomCreateButton({el: "#createNew"});
+        new NewRoomInput({el: '#newRoomName'});
         PageHandler.goto('List');
 
     };

@@ -33,6 +33,7 @@ const HelpCanvas = CanvasLayer.extend({
         let ctx = this.el.getContext("2d");
         let scale = this.model.get("scale");
         let position = this.model.get("position");
+    ctx.strokeStyle = "#000000";
         ctx.beginPath();
         for (let i = 1; i < this.model.get("width"); i++) {
             ctx.moveTo(position.x + i * scale + 0.5, position.y + 0.5);
@@ -44,7 +45,15 @@ const HelpCanvas = CanvasLayer.extend({
         }
         ctx.stroke();
         ctx.closePath();
-    },
+    ctx.beginPath();
+        ctx.strokeStyle = "#FF00FF";
+        ctx.moveTo(position.x + Math.floor(this.model.get("width") /2) * scale + 0.5, position.y + 0.5);
+        ctx.lineTo(position.x + Math.floor(this.model.get("width") /2) * scale + 0.5, position.y + this.model.get("height") * scale + 0.5);
+        ctx.moveTo(position.x + 0.5, position.y + Math.floor(this.model.get("height") /2) * scale + 0.5);
+        ctx.lineTo(position.x + this.model.get("width") * scale + 0.5, position.y + Math.floor(this.model.get("height") /2) * scale + 0.5);
+        ctx.stroke();
+    ctx.closePath();
+},
 });
 
 export default HelpCanvas;

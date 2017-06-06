@@ -70,12 +70,11 @@ const DrawCanvas = CanvasLayer.extend({
         let pixels = this.model.get("pixels");
         let newFormat = [];
         for (let i = 0; i < this.model.get("width"); i++) {
-            newFormat[i] = [];
             for (let j = 0; j < this.model.get("height"); j++) {
-                newFormat[i][j] = pixels[i][j] ? 1 : 0;
+                newFormat[i + j * this.model.get("height")] = pixels[i][j] ? 1 : 0;
             }
         }
-        console.log(JSON.stringify(newFormat).replace(/],\[/g, ','));
+        console.log("PROGMEM const byte name[] = " + JSON.stringify(newFormat).replace(/],\[/g, ',').replace('[', '{').replace(']', '}') + ";");
     },
     clearPixel: function (x, y) {
         let c = this.el;

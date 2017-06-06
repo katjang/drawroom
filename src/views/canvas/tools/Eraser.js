@@ -2,7 +2,7 @@ import Tool from "./Tool";
 
 const Eraser = Tool.extend({
     initialize: function () {
-        this.name = 'eraser';
+        this.name = 'Eraser';
         Tool.prototype.initialize.apply(this, arguments);
     },
     DragHandler: function (e) {

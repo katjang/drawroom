@@ -2,7 +2,7 @@ import Tool from "./Tool";
 
 const Pencil = Tool.extend({
     initialize: function () {
-        this.name = 'pencil';
+        this.name = 'Pencil';
         Tool.prototype.initialize.apply(this, arguments);
     },
     DragHandler: function (e) {

@@ -2,7 +2,7 @@ import CanvasSetting from "./CanvasSetting";
 
 const HelpLines = CanvasSetting.extend({
     initialize: function(){
-        this.name = 'helplines';
+        this.name = 'Helplines';
         CanvasSetting.prototype.initialize.apply(this, arguments);
     },
     onClick: function(){

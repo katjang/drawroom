@@ -7,6 +7,9 @@ const Canvas = Model.extend({
         width: 32, //  how many pixels on the x axis
         pixels: [],
         selectedColor: '#000000',
+        highlightHelpLineColor: "#FF0000",
+        defaultHelpLineColor: "#000000",
+        highLightColor: "#55DD55",
         drawHelpLines: false,
         dragging: false,
         draggingSecondary: false,
@@ -45,6 +48,14 @@ const Canvas = Model.extend({
             };
         }
         return false;
+    },
+    reposition(x, y)
+    {
+        let newPosition = {
+            x: this.get("position").x + x,
+            y: this.get("position").y + y
+        };
+        this.set("position", newPosition);
     }
 });
 export default Canvas;

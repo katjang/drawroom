@@ -87,10 +87,12 @@ const DrawCanvas = CanvasLayer.extend({
     },
     canvasMouseMoveHandler: function (e) {
         if(this.model.get("draggingSecondary")){
-            this.reposition(e.offsetX - this.model.get("lastMousePos").x, e.offsetY - this.model.get("lastMousePos").y);
+            this.model.reposition(e.offsetX - this.model.get("lastMousePos").x, e.offsetY - this.model.get("lastMousePos").y);
             App.events.trigger("canvasRedraw");
         }else if(this.model.get("dragging")){
             App.events.trigger("toolMouseDrag", e);
+        }else{
+            App.events.trigger("toolMouseMove", e);
         }
         this.model.set("lastMousePos", {x: e.offsetX, y: e.offsetY});
     },
@@ -122,28 +124,19 @@ const DrawCanvas = CanvasLayer.extend({
             if (scale <= 20) {
                 let newScale = scale + 1;
                 this.model.set("scale", newScale);
-                this.reposition(( width * (scale- 1) - width * scale) / 2,( height * (scale - 1) - height * scale) / 2);
+                this.model.reposition(( width * (scale- 1) - width * scale) / 2,( height * (scale - 1) - height * scale) / 2);
             }
         } else {
             if (scale > 2) {
                 let newScale = scale - 1;
                 this.model.set("scale", newScale);
-                this.reposition((width * (scale + 1) - width * scale) / 2,( height * (scale + 1) - height * scale)/ 2);
+                this.model.reposition((width * (scale + 1) - width * scale) / 2,( height * (scale + 1) - height * scale)/ 2);
             }
         }
         App.events.trigger("canvasRedraw");
     },
     canvasContextMenu: function () {
         return false;
-    },
-    reposition(x, y)
-    {
-        let newPosition = {
-            x: this.model.get("position").x + + x,
-            y: this.model.get("position").y + + y
-        };
-        this.model.set("position", newPosition);
-
     }
 });
 

@@ -3,7 +3,7 @@ import ColorSelector from"./ColorSelector";
 
 const ColorSetting = CanvasSetting.extend({
     initialize: function(){
-        this.name = 'color';
+        this.name = 'Color';
         CanvasSetting.prototype.initialize.apply(this, arguments);
         new ColorSelector({el: '#colorSelector', model: this.model});
     },

@@ -3,8 +3,8 @@ import {Model} from "backbone";
 const Canvas = Model.extend({
     defaults: {
         scale: 5,
-        height: 100, // how many pixels on the Y axis
-        width: 200, //  how many pixels on the x axis
+        height: 5, // how many pixels on the Y axis
+        width: 16, //  how many pixels on the x axis
         pixels: [],
         selectedColor: '#000000',
         drawHelpLines: false,

@@ -67,15 +67,15 @@ const DrawCanvas = CanvasLayer.extend({
         ctx.fillRect(position.x + x * scale, position.y + y * scale, scale, scale);
         ctx.closePath();
 
-        // let pixels = this.model.get("pixels");
-        // let newFormat = [];
-        // for (let i = 0; i < this.model.get("width"); i++) {
-        //     newFormat[i] = [];
-        //     for (let j = 0; j < this.model.get("height"); j++) {
-        //         newFormat[i][j] = pixels[i][j] ? 1 : 0;
-        //     }
-        // }
-        // console.log(JSON.stringify(newFormat).replace(/\[/g, '{').replace(/]/g, '}'));
+        let pixels = this.model.get("pixels");
+        let newFormat = [];
+        for (let i = 0; i < this.model.get("width"); i++) {
+            newFormat[i] = [];
+            for (let j = 0; j < this.model.get("height"); j++) {
+                newFormat[i][j] = pixels[i][j] ? 1 : 0;
+            }
+        }
+        console.log(JSON.stringify(newFormat).replace(/],\[/g, ','));
     },
     clearPixel: function (x, y) {
         let c = this.el;

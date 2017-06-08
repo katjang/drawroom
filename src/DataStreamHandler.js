@@ -8,7 +8,7 @@ class DataStreamHandler{
         this.socket.addEventListener('roomDetails', (e) => this.handleRoomDetail(e));
         this.socket.addEventListener('sendAllDataForNewUser', (e) => this.userRequestedToSendAllData(e));
         this.socket.addEventListener('pullDimensions', (e) => this.handleNewDimensions(e));
-        document.addEventListener('unload', () => this.handleClosePage());
+        this.socket.addEventListener('pullCanvasData', (e) => this.handleInitData(e));
     }
     joinRoom(room){
         this.socket.emit('join', room);
@@ -16,18 +16,25 @@ class DataStreamHandler{
     leaveRoom(){
         this.socket.emit('leave');
     }
+    sendMessage(message){
+        this.socket.emit('message', message);
+    }
+    sendPixels(newPixels){
+        this.socket.emit('pushPixelsToServer', {pixels: newPixels});
+    }
+    sendCanvasData(canvasData, user){
+        this.socket.emit('pushCanvasDataToUser', {canvasData: canvasData, user: user});
+    }
+    sendDimensions(e){
+        this.socket.emit('pushDimensions', e)
+    }
     handleMessage(e, type){
         App.events.trigger("receivedMessage", {message: e, type: type});
     }
     handleServerPixels(e){
         App.events.trigger("updatePixels", e);
     }
-    sendMessage(message){
-        this.socket.emit('message', message);
-    }
-    sendPixels(newPixels, user){
-        this.socket.emit('pushPixelsToServer', {pixels: newPixels, user: user});
-    };
+
     userRequestedToSendAllData(e){
         App.events.trigger("sendAllDataToUser", e);
     }
@@ -44,8 +51,9 @@ class DataStreamHandler{
     handleNewDimensions(e){
         App.events.trigger("changeDimensions", e);
     }
-    handleClosePage(){
-        this.socket.emit('disconnect');
+    handleInitData(e){
+        console.log('datastreamhandler init data');
+        App.events.trigger("initializeRoomCanvas", e);
     }
 }
 export default (new DataStreamHandler);

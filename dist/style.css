@@ -13,6 +13,10 @@
 }
 input{
     color: #2B2B2B;
+    max-width: 100%;
+}
+#settingMenu input{
+    width: 40px;
 }
 body{
     margin: 0;

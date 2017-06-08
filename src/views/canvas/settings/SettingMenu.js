@@ -1,5 +1,6 @@
 import ColorSelector from "./ColorSetting";
 import HelpLines from "./HelpLines";
+import DimensionSetting from "./DimensionSetting";
 import {View} from "backbone";
 
 const SettingMenu = View.extend({
@@ -10,6 +11,9 @@ const SettingMenu = View.extend({
         this.settings = new Map();
         let color = new ColorSelector({model: this.model});
         let helpLines = new HelpLines({model: this.model});
+
+        new DimensionSetting({model: this.model, el: "#width"});
+        new DimensionSetting({model: this.model, el: "#height"});
 
         this.settings.set(color.name, color);
         this.settings.set(helpLines.name, helpLines);

@@ -37,7 +37,7 @@ const HelpLines = View.extend({
         $('.green-display', this.$el).text(pixelData[1]);
         $('.blue-display', this.$el).text(pixelData[2]);
         $('.colorDisplay', this.$el).css('background-color', HelpFunctions.rgbToHex(pixelData[0], pixelData[1], pixelData[2]));
-    },
+    }
 });
 export default HelpLines;
 

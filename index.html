@@ -52,14 +52,25 @@
             </div>
             <div id="settingMenu">
                 <h3>Settings</h3>
+
+                <div class="flex flex--justify--spacebetween">
+                    <label for="width">W: </label>
+                    <input type="number" id="width" data-id="width">
+                </div>
+                <div class="flex">
+                    <label for="height" class="flex__item">H: </label>
+                    <input type="number" id="height" data-id="height" class="flex__item">
+                </div>
             </div>
         </div>
         <div id="colorSelector" class="box bordered">
             <img src="/dist/gradient.png">
+
             <div class="flex box">
                 <span class="flex__item flex flex--align-center">R: <strong class="red-display"></strong></span>
                 <span class="flex__item flex flex--align-center">G: <strong class="green-display"></strong></span>
                 <span class="flex__item flex flex--align-center">B: <strong class="blue-display"></strong></span>
+
                 <div class="colorDisplay flex__item"></div>
                 <div class="selectedColorDisplay flex__item"></div>
             </div>

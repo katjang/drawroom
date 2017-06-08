@@ -1,4 +1,5 @@
 import {Model} from "backbone";
+import DataStreamHandler from "../DataStreamHandler";
 
 const Canvas = Model.extend({
     defaults: {
@@ -26,6 +27,8 @@ const Canvas = Model.extend({
         this.reset();
         App.events.on("leaveRoom", () => this.reset());
         App.events.on("changeDimensions", (e) => this.changeDimensions(e));
+        App.events.on("sendAllDataToUser", (e) => this.sendAllDataToUser(e));
+        App.events.on("initializeRoomCanvas", (e) => this.initializeCanvas(e));
     },
     reset: function(){
         let pixels = [];
@@ -63,9 +66,9 @@ const Canvas = Model.extend({
         let oldHeight = this.get("height");
         let newPixels = [];
         let oldPixels = this.get("pixels");
-        for (let i = 0; i < data.width; i++) {
+        for (let i = 0; i < (data.hasOwnProperty('width')? data.width: this.get("width")); i++) {
             newPixels[i] = [];
-            for (let j = 0; j < data.height; j++) {
+            for (let j = 0; j < (data.hasOwnProperty('height')? data.height: this.get("height")); j++) {
                 if(i < oldWidth && j < oldHeight){
                     newPixels[i][j] = oldPixels[i][j];
                 }else{
@@ -80,6 +83,29 @@ const Canvas = Model.extend({
         if(data.hasOwnProperty('height')){
             this.set("height", data.height);
         }
+    },
+    sendAllDataToUser: function(data){
+        let pixelArray = [];
+        let pixels = this.get("pixels");
+        for (let i = 0; i < this.get("width"); i++) {
+            for (let j = 0; j < this.get("height"); j++) {
+                pixelArray.push({
+                    x: i,
+                    y: j,
+                    color: pixels[i][j]
+                });
+            }
+        }
+        let canvasData = {
+            pixels: pixelArray,
+            width: this.get("width"),
+            height: this.get("height")
+        };
+        DataStreamHandler.sendCanvasData(canvasData, data);
+    },
+    initializeCanvas: function(data){
+        App.events.trigger("changeDimensions", {width: data.canvasData.width, height: data.canvasData.height});
+        App.events.trigger("updatePixels", data.canvasData.pixels);
     }
 });
 export default Canvas;

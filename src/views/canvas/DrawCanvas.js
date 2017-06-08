@@ -11,7 +11,6 @@ const DrawCanvas = CanvasLayer.extend({
         CanvasLayer.prototype.initialize.apply(this, arguments);
         App.events.on('updatePixels', (e) => this.updatePixels(e));
         App.events.on('toolUpdatePixels', (e) => this.toolUpdatePixels(e));
-        App.events.on('sendAllDataToUser', (e) => this.sendAllDataToUser(e));
         this.$el.bind('mousewheel DOMMouseScroll', (e) => this.canvasMouseScrollHandler(e));
     },
     updatePixels: function (pixels) {
@@ -30,20 +29,7 @@ const DrawCanvas = CanvasLayer.extend({
         this.updatePixels(pixels);
         DataStreamHandler.sendPixels(pixels);
     },
-    sendAllDataToUser: function(data){
-        let sendArray = [];
-        let pixels = this.model.get("pixels");
-        for (let i = 0; i < this.model.get("width"); i++) {
-            for (let j = 0; j < this.model.get("height"); j++) {
-                sendArray.push({
-                    x: i,
-                    y: j,
-                    color: pixels[i][j]
-                });
-            }
-        }
-        DataStreamHandler.sendPixels(sendArray, data);
-    },
+
     canvasRedraw: function () {
         this.clearCanvas();
         let pixels = this.model.get("pixels");

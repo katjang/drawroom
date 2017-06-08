@@ -25,6 +25,7 @@ const Canvas = Model.extend({
     initialize: function () {
         this.reset();
         App.events.on("leaveRoom", () => this.reset());
+        App.events.on("changeDimensions", (e) => this.changeDimensions(e));
     },
     reset: function(){
         let pixels = [];
@@ -56,6 +57,29 @@ const Canvas = Model.extend({
             y: this.get("position").y + y
         };
         this.set("position", newPosition);
+    },
+    changeDimensions(data){
+        let oldWidth = this.get("width");
+        let oldHeight = this.get("height");
+        let newPixels = [];
+        let oldPixels = this.get("pixels");
+        for (let i = 0; i < data.width; i++) {
+            newPixels[i] = [];
+            for (let j = 0; j < data.height; j++) {
+                if(i < oldWidth && j < oldHeight){
+                    newPixels[i][j] = oldPixels[i][j];
+                }else{
+                    newPixels[i][j] = 0;
+                }
+            }
+        }
+        this.set("pixels", newPixels);
+        if(data.hasOwnProperty('width')){
+            this.set("width", data.width);
+        }
+        if(data.hasOwnProperty('height')){
+            this.set("height", data.height);
+        }
     }
 });
 export default Canvas;

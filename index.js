@@ -23,7 +23,7 @@ io.sockets.on('connection', function (socket) {
         }
         socket.room = room;
         publicRooms[room] = io.sockets.adapter.rooms[room];
-        io.sockets.to(room).emit('roomDetails',  {name: room, users:publicRooms[room].sockets});
+        io.sockets.to(room).emit('roomDetails',  {name: room, users: publicRooms[room].sockets});
         socket.broadcast.emit('roomsList', publicRooms);
     });
     socket.on('message', function(e){
@@ -36,6 +36,9 @@ io.sockets.on('connection', function (socket) {
             //send data to just one user (for when a user just connected)
             io.sockets.connected[data['user']].emit('pullPixelsFromServer', data["pixels"])
         }
+    });
+    socket.on('pushDimensions', function(data){
+        socket.to(socket.room).emit('pullDimensions', data);
     });
     socket.on('disconnect', function () {
         if(socket.room){

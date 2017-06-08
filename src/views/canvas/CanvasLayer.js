@@ -6,6 +6,8 @@ const CanvasLayer = View.extend({
         App.events.on('initializeRoom', () => this.resize());
         window.addEventListener('resize', () => this.resize());
         App.events.on("canvasRedraw", () => this.canvasRedraw());
+        this.listenTo(this.model, 'change:width', this.canvasRedraw);
+        this.listenTo(this.model, 'change:height', this.canvasRedraw);
         let ctx = this.el.getContext('2d');
         ctx.imageSmoothingEnabled = false;
     },

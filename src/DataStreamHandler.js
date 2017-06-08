@@ -7,6 +7,7 @@ class DataStreamHandler{
         this.socket.addEventListener('roomsList', (e) => this.handleRoomsList(e));
         this.socket.addEventListener('roomDetails', (e) => this.handleRoomDetail(e));
         this.socket.addEventListener('sendAllDataForNewUser', (e) => this.userRequestedToSendAllData(e));
+        this.socket.addEventListener('pullDimensions', (e) => this.handleNewDimensions(e));
         document.addEventListener('unload', () => this.handleClosePage());
     }
     joinRoom(room){
@@ -39,6 +40,9 @@ class DataStreamHandler{
     }
     handleRoomDetail(e){
         App.events.trigger("updateCurrentRoom", e);
+    }
+    handleNewDimensions(e){
+        App.events.trigger("changeDimensions", e);
     }
     handleClosePage(){
         this.socket.emit('disconnect');

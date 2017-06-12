@@ -48,7 +48,14 @@
         </div>
         <div id="sidebar" class="box">
             <div id="toolbar">
-                <h3>Tools</h3>
+                <script type="text/template" id="toolbar-template">
+                    <h3>Tools</h3>
+                    <% _.each( tools, function( tool ){ %>
+                    <div class="tool" data-name="<%-tool.name%>">
+                        <span><%- tool.name %></span>
+                    </div>
+                    <% }); %>
+                </script>
             </div>
             <div id="settingMenu">
                 <h3>Settings</h3>

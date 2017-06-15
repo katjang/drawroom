@@ -11,29 +11,19 @@ const Toolbar = View.extend({
         "click": "handleClick"
     },
     initialize: function () {
-        this.tools = new Map();
+        this.tools = [];
 
-        let pencil = new Pencil({model: this.model});
-        let eraser = new Eraser({model: this.model});
-        let move = new MoveOnly({model: this.model});
-        let mirror = new Mirror({model: this.model});
-        let bucket = new Bucket({model: this.model});
-
-        this.tools.set(pencil.name, pencil);
-        this.tools.set(eraser.name, eraser);
-        this.tools.set(move.name, move);
-        this.tools.set(mirror.name, mirror);
-        this.tools.set(bucket.name, bucket);
+        this.tools.push(new Pencil(this.model));
+        this.tools.push(new Eraser(this.model));
+        this.tools.push(new MoveOnly(this.model));
+        this.tools.push(new Mirror(this.model));
+        this.tools.push(new Bucket(this.model));
 
         _.templateSettings.variable = "tools";
         let template = _.template($('#toolbar-template').html());
-        let underScoreArray = [];
-        for (let tool of this.tools.values()) {
-            underScoreArray.push(tool);
-        }
-        this.$el.html(template(underScoreArray));
+        this.$el.html(template(this.tools));
 
-        this.selectTool(pencil);
+        this.selectTool(0);
 
         App.events.on('toolMouseDrag', (e) => this.selectedTool.DragHandler(e));
         App.events.on('toolMouseDown', (e) => this.selectedTool.MouseDownHandler(e));
@@ -41,17 +31,16 @@ const Toolbar = View.extend({
         App.events.on('toolMouseMove', (e) => this.selectedTool.MouseMoveHandler(e));
     },
     handleClick: function (e) {
-        console.log(e);
         let target = $(e.target).hasClass('tool') ? $(e.target) : ($(e.target).parents('.tool').length) ? $(e.target).parents('.tool') : false;
         if (target) {
-            let tool = this.tools.get(target.attr('data-name').replace('data-', ''));
-            this.selectTool(tool, target);
+            let index = target[0].dataset.index;
+            this.selectTool(index);
         }
     },
-    selectTool: function (tool, target) {
-        this.selectedTool = tool;
+    selectTool: function (index) {
+        this.selectedTool = this.tools[index];
         $('.tool', this.el).removeClass('selected-tool');
-        $(target).addClass('selected-tool');
+        $('.tool', this.el).eq(index).addClass('selected-tool');
         this.selectedTool.onClick();
     }
 });

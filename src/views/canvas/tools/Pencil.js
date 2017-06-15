@@ -1,11 +1,11 @@
 import Tool from "./Tool";
 
-const Pencil = Tool.extend({
-    initialize: function () {
+class Pencil extends Tool{
+    constructor (model) {
+        super(model);
         this.name = 'Pencil';
-        Tool.prototype.initialize.apply(this, arguments);
-    },
-    DragHandler: function (e) {
+    }
+    DragHandler (e) {
         let indices = this.model.inputToPixelIndex(e.offsetX, e.offsetY);
         let pixels = this.model.get("pixels");
         let selectedColor = this.model.get("selectedColor");
@@ -19,5 +19,5 @@ const Pencil = Tool.extend({
             }
         }
     }
-});
+}
 export default Pencil;

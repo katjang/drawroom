@@ -1,11 +1,11 @@
 import Tool from "./Tool";
 
-const Mirror = Tool.extend({
-    initialize: function () {
+class Mirror extends Tool{
+    constructor(model) {
+        super(model);
         this.name = 'Mirror';
-        Tool.prototype.initialize.apply(this, arguments);
-    },
-    MouseDownHandler: function (e) {
+    }
+    MouseDownHandler (e) {
         let indices = this.model.inputToPixelIndex(e.offsetX, e.offsetY);
         if (indices) {
             let mirroredHalf = (indices.x >= (this.model.get("width") / 2)) ? 1 : 0;
@@ -23,8 +23,8 @@ const Mirror = Tool.extend({
             }
             App.events.trigger("toolUpdatePixels", newPixels);
         }
-    },
-    MouseMoveHandler: function(e){
+    }
+    MouseMoveHandler(e){
         let indices = this.model.inputToPixelIndex(e.offsetX, e.offsetY);
         if (indices) {
             let mirroredHalf = (indices.x >= (this.model.get("width") / 2)) ? 1 : 0;
@@ -39,5 +39,5 @@ const Mirror = Tool.extend({
             App.events.trigger("redrawHelpCanvas");
         }
     }
-});
+}
 export default Mirror;

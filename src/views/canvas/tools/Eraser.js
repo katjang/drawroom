@@ -1,11 +1,11 @@
 import Tool from "./Tool";
 
-const Eraser = Tool.extend({
-    initialize: function () {
+class Eraser extends Tool{
+    constructor(model){
+        super(model);
         this.name = 'Eraser';
-        Tool.prototype.initialize.apply(this, arguments);
-    },
-    DragHandler: function (e) {
+    };
+    DragHandler(e) {
         let indices = this.model.inputToPixelIndex(e.offsetX, e.offsetY);
         let pixels = this.model.get("pixels");
         if (indices) {
@@ -13,5 +13,5 @@ const Eraser = Tool.extend({
             App.events.trigger("toolUpdatePixels", [{x: indices.x, y: indices.y, color: 0}]);
         }
     }
-});
+}
 export default Eraser;

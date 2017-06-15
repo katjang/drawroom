@@ -1,12 +1,12 @@
 import Tool from "./Tool";
 
-const Bucket = Tool.extend({
-    initialize: function () {
+class Bucket extends Tool{
+    constructor(model){
+        super(model);
         this.name = 'Bucket';
         this.newPixels = [];
-        Tool.prototype.initialize.apply(this, arguments);
-    },
-    MouseDownHandler: function (e) {
+    }
+    MouseDownHandler(e) {
         let indices = this.model.inputToPixelIndex(e.offsetX, e.offsetY);
         if (indices) {
             let pixels = this.model.get("pixels");
@@ -28,8 +28,8 @@ const Bucket = Tool.extend({
             App.events.trigger("toolUpdatePixels", this.newPixels);
             this.newPixels = [];
         }
-    },
-    checkPixel: function(checkColor, pixels, x, y){
+    }
+    checkPixel(checkColor, pixels, x, y){
         if(this.checkedPixels[x][y]) return;
 
         if(pixels[x][y] == checkColor){
@@ -49,5 +49,5 @@ const Bucket = Tool.extend({
             }
         }
     }
-});
+}
 export default Bucket;

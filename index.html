@@ -50,8 +50,8 @@
             <div id="toolbar">
                 <script type="text/template" id="toolbar-template">
                     <h3>Tools</h3>
-                    <% _.each( tools, function( tool ){ %>
-                    <div class="tool" data-name="<%-tool.name%>">
+                    <% _.each( tools, function(tool, i ){ %>
+                    <div class="tool" data-index="<%= i %>">
                         <span><%- tool.name %></span>
                     </div>
                     <% }); %>

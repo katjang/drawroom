@@ -40,7 +40,28 @@ import PageHandler from "./PageHandler";
         new NewRoomInput({el: '#newRoomName'});
         PageHandler.goto('List');
 
+
+        App.events.on('drawOnScreen', function(array){
+            // delete this function before hand in;
+            let pixels = canvasModel.get('pixels');
+            let newPixels= [];
+            if(array.length == canvasModel.get("width") * canvasModel.get("height")){
+                for(let i = 0; i < array.length; i ++){
+                    newPixels.push({
+                        x: i % canvasModel.get("width"),
+                        y: Math.floor(i / canvasModel.get("width")),
+                        color: array[i] == "0"? 0 : array[i]
+                    });
+                }
+
+                App.events.trigger("toolUpdatePixels", newPixels);
+            }else{
+                console.log('Nice try, je bent alleen vergeten de canvas te resizen!');
+            }
+
+        });
     };
     window.addEventListener('load', init);
 })();
+
 

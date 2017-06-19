@@ -113,11 +113,12 @@ const DrawCanvas = CanvasLayer.extend({
         App.events.trigger("canvasRedraw");
     },
     canvasContextMenu: function () {
+        // delete before handin!!
         let pixels = this.model.get("pixels");
         let newFormat = [];
         for (let i = 0; i < this.model.get("width"); i++) {
             for (let j = 0; j < this.model.get("height"); j++) {
-                newFormat[i + j * this.model.get("height")] = pixels[i][j] ? 1 : 0;
+                newFormat[i + j * this.model.get("width")] = pixels[i][j] ? 1 : 0;
             }
         }
         console.log("PROGMEM const byte name[] = " + JSON.stringify(newFormat).replace(/],\[/g, ',').replace('[', '{').replace(']', '}') + ";");

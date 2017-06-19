@@ -6,7 +6,6 @@ const HelpLines = CanvasSetting.extend({
         CanvasSetting.prototype.initialize.apply(this, arguments);
     },
     onClick: function(){
-        this.el.toggleClass('selected-tool');
         this.toggleFunction();
     },
     toggleFunction: function(){

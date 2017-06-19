@@ -1,7 +1,7 @@
 import {View} from "backbone";
 import HelpFunctions from "../../../HelpFunctions";
 
-const HelpLines = View.extend({
+const ColorSelector = View.extend({
     events: {
         'click': 'clickHandler',
         'mousemove': 'hoverHandler'
@@ -39,5 +39,5 @@ const HelpLines = View.extend({
         $('.colorDisplay', this.$el).css('background-color', HelpFunctions.rgbToHex(pixelData[0], pixelData[1], pixelData[2]));
     }
 });
-export default HelpLines;
+export default ColorSelector;
 

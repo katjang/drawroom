@@ -10,7 +10,6 @@ const ColorSetting = CanvasSetting.extend({
 
     onClick: function(e){
         App.events.trigger("toggleColorSelector");
-        this.el.toggleClass('selected-tool');
     }
 });
 export default ColorSetting;

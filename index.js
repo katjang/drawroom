@@ -3,6 +3,7 @@ let app = express();
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
 let publicRooms = {};
+let names = {};
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
@@ -14,8 +15,11 @@ io.sockets.on('connection', function (socket) {
         socket.leave(socket.room);
         publicRooms[socket.room] = io.sockets.adapter.rooms[socket.room];
     }
+    socket.on('setName', function(e){
+        names[socket.id] = e;
+    });
     socket.on('message', function (e) {
-        socket.to(socket.room).emit('message', e);
+        socket.to(socket.room).emit('message', {message: e, user: names[socket.id]});
     });
     socket.on('pushPixelsToServer', function (data) {
         socket.to(socket.room).emit('pullPixelsFromServer', data["pixels"]);
@@ -32,13 +36,10 @@ io.sockets.on('connection', function (socket) {
     function handleUserLeave(){
         socket.leave(socket.room);
         io.sockets.emit('roomsList', publicRooms);
-        io.sockets.to(socket.room).emit('serverMessage', 'someone has left the room!');
+        io.sockets.to(socket.room).emit('serverMessage', {message: 'someone has left the room!', user: 'server'});
         publicRooms[socket.room] = io.sockets.adapter.rooms[socket.room];
         if (publicRooms[socket.room] != undefined) {
-            io.sockets.to(socket.room).emit('roomDetails', {
-                name: socket.room,
-                users: publicRooms[socket.room].sockets
-            });
+            sendRoomDetailsToUsersIn(socket.room);
         }
     }
     function handleUserDisconnect(){
@@ -48,15 +49,21 @@ io.sockets.on('connection', function (socket) {
     }
     function handleUserJoin(room){
         socket.join(room);
-        socket.emit('serverMessage', 'you are connected with room: ' + room);
-        socket.to(room).emit('serverMessage', 'someone else has entered this room!');
+        socket.emit('serverMessage', {message: 'you are connected with room: ' + room, user: 'server'});
+        socket.to(room).emit('serverMessage', {message: 'someone else has entered this room!', user: 'server'});
         if (io.sockets.adapter.rooms[room].length >= 2) {
             io.sockets.connected[Object.keys(io.sockets.adapter.rooms[room].sockets)[0]].emit('sendAllDataForNewUser', socket.id);
         }
         socket.room = room;
         publicRooms[room] = io.sockets.adapter.rooms[room];
-        io.sockets.to(room).emit('roomDetails', {name: room, users: publicRooms[room].sockets});
+        sendRoomDetailsToUsersIn(room);
         socket.broadcast.emit('roomsList', publicRooms);
+    }
+    function sendRoomDetailsToUsersIn(room){
+        let users = Object.keys(publicRooms[room].sockets).map((key) => {
+            return names[key];
+        });
+        io.sockets.to(room).emit('roomDetails', {name: room, users: users});
     }
 });
 

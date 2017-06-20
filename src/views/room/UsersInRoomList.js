@@ -6,8 +6,8 @@ const RoomOverview = View.extend({
     },
     updateDom: function(e, a){
         this.$el.empty();
-        for (let entry in a) {
-            this.$el.append($('<span>').text(entry));
+        for (let i = 0; i < a.length; i ++) {
+            this.$el.append($('<span>').text(a[i]));
         }
     }
 

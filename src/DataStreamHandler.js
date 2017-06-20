@@ -16,6 +16,9 @@ class DataStreamHandler{
     leaveRoom(){
         this.socket.emit('leave');
     }
+    sendName(name){
+        this.socket.emit('setName', name);
+    }
     sendMessage(message){
         this.socket.emit('message', message);
     }
@@ -29,7 +32,7 @@ class DataStreamHandler{
         this.socket.emit('pushDimensions', e)
     }
     handleMessage(e, type){
-        App.events.trigger("receivedMessage", {message: e, type: type});
+        App.events.trigger("receivedMessage", {message: e['message'], user: e['user'], type: type});
     }
     handleServerPixels(e){
         App.events.trigger("updatePixels", e);

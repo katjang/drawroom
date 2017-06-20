@@ -7,7 +7,9 @@ const Messages = View.extend({
     handleMessage(e) {
         let message = e.message;
         let type = e.type;
-        this.$el.append($('<div>').append($('<span>', {class: type == ('server'||'self') ? 'server-message' : ''}).text(message)));
+        let user = e.user;
+
+        this.$el.append($('<div>').append($('<span>', {class: type == ('server'||'self') ? 'server-message' : ''}).text((type != 'server'? (type == 'self'? 'You: ' : (user + ': ')): '') + message)));
         this.$el.scrollTop(this.$el.scrollHeight);
         if(type != 'self'){
             new Audio('https://www.freesound.org//data/previews/341/341868_6114721-lq.ogg').play();

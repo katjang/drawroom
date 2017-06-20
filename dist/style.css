@@ -11,6 +11,12 @@
 .page{
     display: none;
 }
+#Name-page{
+    height: 100vh;
+}
+#users > span{
+    margin: 0 10px;
+}
 input{
     color: #2B2B2B;
     max-width: 100%;

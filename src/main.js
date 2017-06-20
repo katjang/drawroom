@@ -6,6 +6,8 @@ import SettingMenu from "./views/canvas/settings/SettingMenu";
 import RoomName from "./views/room/RoomName";
 import BackButton from "./views/room/BackButton";
 import UsersInRoomList from "./views/room/UsersInRoomList";
+import RoomPage from "./views/room";
+import RoomListPage from "./views/roomList";
 
 import RoomCreateButton from "./views/listView/newRoom/RoomCreateButton";
 import RoomList from "./views/listView/rooms/RoomList";
@@ -38,7 +40,15 @@ import PageHandler from "./PageHandler";
         new RoomList({el: '#list-view'});
         new RoomCreateButton({el: "#createNew"});
         new NewRoomInput({el: '#newRoomName'});
-        PageHandler.goto('List');
+
+        //reason for not nesting all objects into pages is easier access to models.
+        let roomPage = new RoomPage({el: '#Room-page'});
+        let roomListPage = new RoomListPage({el: '#List-page'});
+
+        PageHandler.addPage(roomPage);
+        PageHandler.addPage(roomListPage);
+
+        PageHandler.goto('list');
 
 
         App.events.on('drawOnScreen', function(array){

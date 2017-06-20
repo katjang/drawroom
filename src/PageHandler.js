@@ -1,12 +1,15 @@
 class PageHandler{
-    goto(id){
-        // $('.page').stop().fadeOut({complete: () => this.showPage(id)});
-
-        $('.page').stop().fadeOut().promise().done(() => this.showPage(id));
+    constructor(){
+        this.pages = new Map();
     }
-    showPage(id){
-        $('#'+id+'-page').fadeIn();
-        App.events.trigger('initialize'+id);
+    goto(name){
+        let promises = Array.from(this.pages.values()).map((obj) => {
+            return obj.hidePage();
+        });
+        Promise.all(promises).then(() => {this.pages.get(name).showPage()});
+    }
+    addPage(page){
+        this.pages.set(page.name, page);
     }
 }
 export default (new PageHandler);

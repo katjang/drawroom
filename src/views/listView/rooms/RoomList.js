@@ -12,7 +12,7 @@ const RoomList = View.extend({
     clickHandler: function(e){
         let target = $(e.target).hasClass('room--list') ? $(e.target) : ($(e.target).parents('.room--list').length) ? $(e.target).parents('.room--list') : false;
         if (target) {
-            PageHandler.goto('Room');
+            PageHandler.goto('room');
             DataStreamHandler.joinRoom(target.attr('data-name').replace('data-', ''));
         }
     },

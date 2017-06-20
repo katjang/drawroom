@@ -10,8 +10,8 @@ const SettingMenu = View.extend({
     },
     initialize: function(){
         this.settings = [];
-        this.settings.push(new HelpLines({model: this.model}));
-        this.settings.push(new ColorSetting({model: this.model}));
+        this.settings.push(new HelpLines(this.model));
+        this.settings.push(new ColorSetting(this.model));
 
         _.templateSettings.variable = "settings";
         let template = _.template($('#settings-template').html());
@@ -30,9 +30,8 @@ const SettingMenu = View.extend({
         }
     },
     toggleSetting: function(index){
+        $('.setting', this.el).eq(index).toggleClass('selected-tool');
         this.settings[index].onClick();
-        $('.setting', this.el).removeClass('selected-tool');
-        $('.setting', this.el).eq(index).addClass('selected-tool');
     }
 });
 export default SettingMenu;

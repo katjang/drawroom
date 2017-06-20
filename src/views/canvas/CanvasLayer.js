@@ -3,7 +3,7 @@ import {View} from "backbone";
 
 const CanvasLayer = View.extend({
     initialize: function () {
-        App.events.on('initializeRoom', () => this.resize());
+        App.events.on('initializeroom', () => this.resize());
         window.addEventListener('resize', () => this.resize());
         App.events.on("canvasRedraw", () => this.canvasRedraw());
         this.listenTo(this.model, 'change:width', this.canvasRedraw);

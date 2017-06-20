@@ -1,15 +1,14 @@
 import CanvasSetting from "./CanvasSetting";
 import ColorSelector from"./ColorSelector";
 
-const ColorSetting = CanvasSetting.extend({
-    initialize: function(){
+class ColorSetting extends CanvasSetting{
+    constructor(model){
+        super(model);
         this.name = 'Color';
-        CanvasSetting.prototype.initialize.apply(this, arguments);
         new ColorSelector({el: '#colorSelector', model: this.model});
-    },
-
-    onClick: function(e){
+    }
+    onClick(e){
         App.events.trigger("toggleColorSelector");
     }
-});
+}
 export default ColorSetting;

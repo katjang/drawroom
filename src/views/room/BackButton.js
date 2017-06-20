@@ -9,7 +9,7 @@ const BackButton = View.extend({
     handleClick(){
         DataStreamHandler.leaveRoom();
         App.events.trigger("leaveRoom");
-        PageHandler.goto('List');
+        PageHandler.goto('list');
     }
 
 });

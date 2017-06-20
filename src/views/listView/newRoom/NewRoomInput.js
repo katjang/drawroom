@@ -20,7 +20,7 @@ const NewRoomInput = View.extend({
         return tmp;
     },
     createRoom: function(){
-        PageHandler.goto('Room');
+        PageHandler.goto('room');
         DataStreamHandler.joinRoom(this.popData());
     }
 });

@@ -1,16 +1,16 @@
 import CanvasSetting from "./CanvasSetting";
 
-const HelpLines = CanvasSetting.extend({
-    initialize: function(){
+class HelpLines extends CanvasSetting{
+    constructor(model){
+        super(model);
         this.name = 'Helplines';
-        CanvasSetting.prototype.initialize.apply(this, arguments);
-    },
-    onClick: function(){
+    }
+    onClick(){
         this.toggleFunction();
-    },
-    toggleFunction: function(){
+    }
+    toggleFunction(){
         this.model.set("drawHelpLines", !this.model.get("drawHelpLines"));
     }
-});
+}
 export default HelpLines;
 

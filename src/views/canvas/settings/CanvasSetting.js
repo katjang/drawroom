@@ -1,7 +1,6 @@
-import {View} from "backbone";
-
-const CanvasSetting = View.extend({
-    initialize: function(){
+class CanvasSetting{
+    constructor(model){
+        this.model = model;
     }
-});
+}
 export default CanvasSetting;

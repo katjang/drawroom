@@ -2,6 +2,7 @@ let express = require('express');
 let app = express();
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
+
 let publicRooms = {};
 let names = {};
 
@@ -36,7 +37,7 @@ io.sockets.on('connection', function (socket) {
     function handleUserLeave(){
         socket.leave(socket.room);
         io.sockets.emit('roomsList', publicRooms);
-        io.sockets.to(socket.room).emit('serverMessage', {message: 'someone has left the room!', user: 'server'});
+        io.sockets.to(socket.room).emit('serverMessage', {message: names[socket.id] +' has left the room!', user: 'server'});
         publicRooms[socket.room] = io.sockets.adapter.rooms[socket.room];
         if (publicRooms[socket.room] != undefined) {
             sendRoomDetailsToUsersIn(socket.room);
@@ -50,7 +51,7 @@ io.sockets.on('connection', function (socket) {
     function handleUserJoin(room){
         socket.join(room);
         socket.emit('serverMessage', {message: 'you are connected with room: ' + room, user: 'server'});
-        socket.to(room).emit('serverMessage', {message: 'someone else has entered this room!', user: 'server'});
+        socket.to(room).emit('serverMessage', {message: names[socket.id] + ' has entered this room!', user: 'server'});
         if (io.sockets.adapter.rooms[room].length >= 2) {
             io.sockets.connected[Object.keys(io.sockets.adapter.rooms[room].sockets)[0]].emit('sendAllDataForNewUser', socket.id);
         }

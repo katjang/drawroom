@@ -6,12 +6,15 @@
     <link type="text/css" href="/dist/style.css" rel="stylesheet">
 </head>
 <body>
-<div id="Name-page" class="page flex flex--center">
-    <div>
-        <label for="username">Choose username:</label>
-        <input type="text" id="username">
-        <input type="button" class="my-button" name="sendName" id="sendName" value="choose">
+<div id="Name-page" class="page">
+    <div class="flex flex--center">
+        <div>
+            <label for="username">Choose username:</label>
+            <input type="text" id="username">
+            <input type="button" class="my-button" name="sendName" id="sendName" value="choose">
+        </div>
     </div>
+</div>
 </div>
 <div id="List-page" class="page">
     <div id="list-view" hidden>
@@ -34,9 +37,21 @@
                 <div id="users" class="flex__item flex flex--center">
 
                 </div>
+                <script type="text/template" id="users-template">
+                    <% _.each( users, function(user, i ){ %>
+                    <div>
+                        <span><%- user %></span>
+                    </div>
+                    <% }); %>
+                </script>
             </div>
             <div class="flex flex__item">
                 <div id="chat" class="flex flex--collumn">
+                    <script type="text/template" id="message-template">
+                        <div>
+                            <span class="<%= data.type == ('server'||'self') ? 'server-message' : '' %>"><%= (data.type != 'server'? (data.type == 'self'? 'You: ' : (data.user + ': ')): '') %><%- data.message %></span>
+                        </div>
+                    </script>
                     <div class="flex__item bordered" id="messages"></div>
                     <div class="flex messageInput">
                         <input type="text" class="flex__item" id="chatInput">
@@ -102,7 +117,7 @@
 <script>
 
 
-    function draw(array){
+    function draw(array) {
         //delete this function before hand in; absolute niet inleveren
         var newArray = array.split(',');
         App.events.trigger('drawOnScreen', newArray);

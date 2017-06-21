@@ -1,14 +1,14 @@
 import {View} from "backbone";
+import _ from "underscore";
 
 const RoomOverview = View.extend({
     initialize: function () {
         this.listenTo(this.model, "change:users", this.updateDom);
     },
     updateDom: function(e, a){
-        this.$el.empty();
-        for (let i = 0; i < a.length; i ++) {
-            this.$el.append($('<span>').text(a[i]));
-        }
+        _.templateSettings.variable = "users";
+        let template = _.template($('#users-template').html());
+        this.$el.html(template(a));
     }
 
 });

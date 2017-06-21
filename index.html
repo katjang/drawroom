@@ -34,16 +34,16 @@
                     <button id="back-to-list" class="my-button">back</button>
                     <h2 id="roomName"></h2>
                 </div>
-                <div id="users" class="flex__item flex flex--center">
-
-                </div>
-                <script type="text/template" id="users-template">
+                <script id="users-template" type="text/template">
                     <% _.each( users, function(user, i ){ %>
                     <div>
-                        <span><%- user %></span>
+                        <span><%= user %></span>
                     </div>
                     <% }); %>
                 </script>
+                <div id="users" class="flex__item flex flex--center">
+
+                </div>
             </div>
             <div class="flex flex__item">
                 <div id="chat" class="flex flex--collumn">

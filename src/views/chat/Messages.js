@@ -4,11 +4,11 @@ import _ from "underscore";
 const Messages = View.extend({
     initialize: function(){
         App.events.on('receivedMessage', (e) => this.handleMessage(e));
+        _.templateSettings.variable = "data";
+        this.template = _.template($('#message-template').html());
     },
     handleMessage(e) {
-        _.templateSettings.variable = "data";
-        let template = _.template($('#message-template').html());
-        this.$el.append(template(e));
+        this.$el.append(this.template(e));
 
         this.el.scrollTop = this.el.scrollHeight;
         if(e.type != 'self'){

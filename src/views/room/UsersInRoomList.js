@@ -4,11 +4,11 @@ import _ from "underscore";
 const RoomOverview = View.extend({
     initialize: function () {
         this.listenTo(this.model, "change:users", this.updateDom);
+        _.templateSettings.variable = "users";
+        this.template = _.template($('#users-template').html());
     },
     updateDom: function(e, a){
-        _.templateSettings.variable = "users";
-        let template = _.template($('#users-template').html());
-        this.$el.html(template(a));
+        this.$el.html(this.template(a));
     }
 
 });

@@ -8,7 +8,7 @@ import _ from "underscore";
 
 const Toolbar = View.extend({
     events: {
-        "click": "handleClick"
+        "click .tool": "handleClick"
     },
     initialize: function () {
         this.tools = [];
@@ -20,8 +20,8 @@ const Toolbar = View.extend({
         this.tools.push(new Bucket(this.model));
 
         _.templateSettings.variable = "tools";
-        let template = _.template($('#toolbar-template').html());
-        this.$el.html(template(this.tools));
+        this.template = _.template($('#toolbar-template').html());
+        this.$el.html(this.template(this.tools));
 
         this.selectTool(0);
 
@@ -31,11 +31,7 @@ const Toolbar = View.extend({
         App.events.on('toolMouseMove', (e) => this.selectedTool.MouseMoveHandler(e));
     },
     handleClick: function (e) {
-        let target = $(e.target).hasClass('tool') ? $(e.target) : ($(e.target).parents('.tool').length) ? $(e.target).parents('.tool') : false;
-        if (target) {
-            let index = target[0].dataset.index;
-            this.selectTool(index);
-        }
+        this.selectTool(e.currentTarget.dataset.index);
     },
     selectTool: function (index) {
         this.selectedTool = this.tools[index];

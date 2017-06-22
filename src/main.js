@@ -1,3 +1,4 @@
+import $ from "jquery";
 import DrawCanvas from "./views/canvas/DrawCanvas";
 import HelpCanvas from "./views/canvas/HelpCanvas";
 import Chat from "./views/chat/Chat";
@@ -26,6 +27,7 @@ import PageHandler from "./PageHandler";
     let setGlobalVariables = function () {
         window.App = {};
         window.App.events = _.clone(Events);
+        window.$ = $;
     };
     let init = function () {
         setGlobalVariables();
@@ -60,26 +62,6 @@ import PageHandler from "./PageHandler";
         new NameInput({el: '#username'});
 
         PageHandler.goto(namePage.name);
-
-        App.events.on('drawOnScreen', function(array){
-            // delete this function before hand in;
-            let pixels = canvasModel.get('pixels');
-            let newPixels= [];
-            if(array.length == canvasModel.get("width") * canvasModel.get("height")){
-                for(let i = 0; i < array.length; i ++){
-                    newPixels.push({
-                        x: i % canvasModel.get("width"),
-                        y: Math.floor(i / canvasModel.get("width")),
-                        color: array[i] == "0"? 0 : array[i]
-                    });
-                }
-
-                App.events.trigger("toolUpdatePixels", newPixels);
-            }else{
-                console.log('Nice try, je bent alleen vergeten de canvas te resizen!');
-            }
-
-        });
     };
     window.addEventListener('load', init);
 })();

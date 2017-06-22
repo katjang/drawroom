@@ -13,6 +13,10 @@
 }
 #Name-page{
     height: 100vh;
+    font-size: 20px;
+}
+#List-page{
+    font-size: 20px;
 }
 #Name-page > div{
     height: 100%;
@@ -151,11 +155,9 @@ canvas{
     border: 5px solid #BABABA;
 }
 #create-new{
-    font-size: 20px;
     padding: 20px;
 }
 .room--list{
-    font-size: 30px;
     padding: 20px;
     cursor: pointer;
 }
@@ -165,7 +167,6 @@ canvas{
 
 #create-new input[type=text]{
     height: 30px;
-    font-size: 20px;
     vertical-align: middle;
 }
 .room--list:hover{
@@ -182,7 +183,6 @@ canvas{
     background-color: #3C3F41;
     outline: none;
 }
-/*Room overview*/
 #roomOverview{
     height: 50px;
     width: 100%;

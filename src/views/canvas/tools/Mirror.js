@@ -5,7 +5,7 @@ class Mirror extends Tool{
         super(model);
         this.name = 'Mirror';
     }
-    MouseDownHandler (e) {
+    mouseDownHandler (e) {
         let indices = this.model.inputToPixelIndex(e.offsetX, e.offsetY);
         if (indices) {
             let mirroredHalf = (indices.x >= (this.model.get("width") / 2)) ? 1 : 0;
@@ -24,7 +24,7 @@ class Mirror extends Tool{
             App.events.trigger("toolUpdatePixels", newPixels);
         }
     }
-    MouseMoveHandler(e){
+    mouseMoveHandler(e){
         let indices = this.model.inputToPixelIndex(e.offsetX, e.offsetY);
         if (indices) {
             let mirroredHalf = (indices.x >= (this.model.get("width") / 2)) ? 1 : 0;

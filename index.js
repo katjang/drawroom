@@ -61,10 +61,12 @@ io.sockets.on('connection', function (socket) {
         socket.broadcast.emit('roomsList', publicRooms);
     }
     function sendRoomDetailsToUsersIn(room){
-        let users = Object.keys(publicRooms[room].sockets).map((key) => {
+        io.sockets.to(room).emit('roomDetails', {name: room, users: getUsersIn(room)});
+    }
+    function getUsersIn (room){
+        return Object.keys(publicRooms[room].sockets).map((key) => {
             return names[key];
         });
-        io.sockets.to(room).emit('roomDetails', {name: room, users: users});
     }
 });
 

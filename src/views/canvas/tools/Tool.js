@@ -4,16 +4,16 @@ class Tool{
     }
     onClick(e) {
     };
-    DragHandler(e){
+    dragHandler(e){
 
     };
-    MouseDownHandler(e){
-        this.DragHandler(e);
+    mouseDownHandler(e){
+        this.dragHandler(e);
     };
-    MouseUpHandler(e){
+    mouseUpHandler(e){
 
     };
-    MouseMoveHandler(e){
+    mouseMoveHandler(e){
 
     };
 }

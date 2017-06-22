@@ -11,33 +11,30 @@ const Toolbar = View.extend({
         "click .tool": "handleClick"
     },
     initialize: function () {
-        this.tools = [];
+        let tools = this.model.get('tools');
 
-        this.tools.push(new Pencil(this.model));
-        this.tools.push(new Eraser(this.model));
-        this.tools.push(new MoveOnly(this.model));
-        this.tools.push(new Mirror(this.model));
-        this.tools.push(new Bucket(this.model));
+        tools.push(new Pencil(this.model));
+        tools.push(new Eraser(this.model));
+        tools.push(new MoveOnly(this.model));
+        tools.push(new Mirror(this.model));
+        tools.push(new Bucket(this.model));
+
+        this.model.set('tools', tools);
 
         _.templateSettings.variable = "tools";
         this.template = _.template($('#toolbar-template').html());
-        this.$el.html(this.template(this.tools));
+        this.$el.html(this.template(this.model.get("tools")));
 
         this.selectTool(0);
-
-        App.events.on('toolMouseDrag', (e) => this.selectedTool.DragHandler(e));
-        App.events.on('toolMouseDown', (e) => this.selectedTool.MouseDownHandler(e));
-        App.events.on('toolMouseUp', (e) => this.selectedTool.MouseUpHandler(e));
-        App.events.on('toolMouseMove', (e) => this.selectedTool.MouseMoveHandler(e));
     },
     handleClick: function (e) {
         this.selectTool(e.currentTarget.dataset.index);
     },
     selectTool: function (index) {
-        this.selectedTool = this.tools[index];
+        this.model.set('selectedTool', this.model.get('tools')[index]);
         $('.tool', this.el).removeClass('selected-tool');
         $('.tool', this.el).eq(index).addClass('selected-tool');
-        this.selectedTool.onClick();
+        this.model.get('selectedTool').onClick();
     }
 });
 export default Toolbar;

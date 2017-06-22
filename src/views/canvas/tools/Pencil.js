@@ -5,7 +5,7 @@ class Pencil extends Tool{
         super(model);
         this.name = 'Pencil';
     }
-    DragHandler (e) {
+    dragHandler (e) {
         let indices = this.model.inputToPixelIndex(e.offsetX, e.offsetY);
         let pixels = this.model.get("pixels");
         let selectedColor = this.model.get("selectedColor");

@@ -7,7 +7,7 @@ import RoomName from "./views/room/RoomName";
 import BackButton from "./views/room/BackButton";
 import UsersInRoomList from "./views/room/UsersInRoomList";
 import RoomPage from "./views/room";
-import RoomListPage from "./views/roomList";
+import RoomListPage from "./views/RoomsPage";
 import NamePage from "./views/Name";
 
 import NameButton from "./views/NamePage/NameButton";
@@ -29,6 +29,16 @@ import PageHandler from "./PageHandler";
     };
     let init = function () {
         setGlobalVariables();
+
+        //reason for not nesting all objects into pages is easier access to models.
+        let roomPage = new RoomPage({el: '#Room-page'});
+        let roomListPage = new RoomListPage({el: '#List-page'});
+        let namePage = new NamePage({el: '#Name-page'});
+
+        PageHandler.addPage(roomPage);
+        PageHandler.addPage(roomListPage);
+        PageHandler.addPage(namePage);
+
         let canvasModel = new Canvas();
         let canvas = new DrawCanvas({el: '#canvas', model: canvasModel});
         let helpCanvas = new HelpCanvas({el: '#helpCanvas', model: canvasModel});
@@ -49,17 +59,7 @@ import PageHandler from "./PageHandler";
         new NameButton({el: '#sendName'});
         new NameInput({el: '#username'});
 
-        //reason for not nesting all objects into pages is easier access to models.
-        let roomPage = new RoomPage({el: '#Room-page'});
-        let roomListPage = new RoomListPage({el: '#List-page'});
-        let namePage = new NamePage({el: '#Name-page'});
-
-        PageHandler.addPage(roomPage);
-        PageHandler.addPage(roomListPage);
-        PageHandler.addPage(namePage);
-
         PageHandler.goto(namePage.name);
-
 
         App.events.on('drawOnScreen', function(array){
             // delete this function before hand in;

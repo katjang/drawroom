@@ -67,9 +67,9 @@ const DrawCanvas = CanvasLayer.extend({
             this.model.reposition(e.offsetX - this.model.get("lastMousePos").x, e.offsetY - this.model.get("lastMousePos").y);
             App.events.trigger("canvasRedraw");
         }else if(this.model.get("dragging")){
-            App.events.trigger("toolMouseDrag", e);
+            this.model.get("selectedTool").dragHandler(e);
         }else{
-            App.events.trigger("toolMouseMove", e);
+            this.model.get("selectedTool").mouseMoveHandler(e);
         }
         this.model.set("lastMousePos", {x: e.offsetX, y: e.offsetY});
     },
@@ -81,7 +81,7 @@ const DrawCanvas = CanvasLayer.extend({
             return;
         }
         this.model.set('dragging', true);
-        App.events.trigger("toolMouseDown", e);
+        this.model.get("selectedTool").mouseDownHandler(e);
     },
 
     canvasMouseUpHandler: function (e) {
@@ -90,7 +90,7 @@ const DrawCanvas = CanvasLayer.extend({
         if (e.button == 2) {
             return;
         }
-        App.events.trigger("toolMouseUp", e);
+        this.model.get("selectedTool").mouseUpHandler(e);
     },
 
     canvasMouseScrollHandler: function (event) {

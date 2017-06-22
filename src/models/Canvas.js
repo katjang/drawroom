@@ -21,7 +21,9 @@ const Canvas = Model.extend({
         position: {
             x: 0,
             y: 0
-        }
+        },
+        tools: [],
+        selectedTool: {}
     },
     initialize: function () {
         this.reset();

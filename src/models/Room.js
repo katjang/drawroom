@@ -4,7 +4,7 @@ const Room = Model.extend({
     defaults: {
         users: {},
     },
-    name: 0,
+    name: '',
     initialize: function () {
         App.events.on("updateCurrentRoom", (e) => this.handleNewRoomData(e));
     },
@@ -12,6 +12,5 @@ const Room = Model.extend({
         this.set("users", e['users']);
         this.set("name", e['name']);
     }
-
 });
 export default Room;

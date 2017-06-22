@@ -3,40 +3,32 @@ import HelpFunctions from "../../../HelpFunctions";
 
 const ColorSelector = View.extend({
     events: {
-        'click': 'clickHandler',
-        'mousemove': 'hoverHandler'
+        'click img': 'clickHandler',
+        'mousemove img': 'hoverHandler'
     },
     initialize: function(){
         App.events.on("toggleColorSelector", () => this.toggle());
-        setTimeout(() => this.initialiseColorSelector(), 1000);
+        this.selectColorCanvas = document.createElement('canvas');
+        this.selectColorCanvas.width = this.$('img').width();
+        this.selectColorCanvas.height = this.$('img').height();
+        this.selectColorCanvas.getContext('2d').drawImage(this.$('img')[0], 0, 0, this.$('img').width(), this.$('img').height());
+        this.$('.selectedColorDisplay').css('background-color', this.model.get('selectedColor')); // changing CSS in javascript is ugly but hard to do with classes.
     },
     toggle: function(){
         this.$el.toggle();
     },
-    initialiseColorSelector: function(){
-        this.selectColorCanvas = document.createElement('canvas');
-        this.selectColorCanvas.width = $('img', this.$el).width();
-        this.selectColorCanvas.height = $('img', this.$el).height();
-        this.selectColorCanvas.getContext('2d').drawImage($('img', this.$el)[0], 0, 0, $('img', this.$el).width(), $('img', this.$el).height());
-    },
     clickHandler: function(e){
-        if(!$(e.target).is('img')){
-            return false;
-        }
         let pixelData = this.selectColorCanvas.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data;
         let hexColor = HelpFunctions.rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
-        $('.selectedColorDisplay', this.$el).css('background-color', hexColor);
+        this.$('.selectedColorDisplay').css('background-color', hexColor);
         this.model.set('selectedColor', hexColor);
     },
     hoverHandler: function(e){
-        if(!$(e.target).is('img')){
-            return false;
-        }
         let pixelData = this.selectColorCanvas.getContext('2d').getImageData(e.offsetX, e.offsetY, 1, 1).data;
-        $('.red-display', this.$el).text(pixelData[0]);
-        $('.green-display', this.$el).text(pixelData[1]);
-        $('.blue-display', this.$el).text(pixelData[2]);
-        $('.colorDisplay', this.$el).css('background-color', HelpFunctions.rgbToHex(pixelData[0], pixelData[1], pixelData[2]));
+        this.$('.red-display').text(pixelData[0]);
+        this.$('.green-display').text(pixelData[1]);
+        this.$('.blue-display').text(pixelData[2]);
+        this.$('.colorDisplay').css('background-color', HelpFunctions.rgbToHex(pixelData[0], pixelData[1], pixelData[2]));
     }
 });
 export default ColorSelector;

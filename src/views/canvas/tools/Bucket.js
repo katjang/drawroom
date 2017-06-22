@@ -6,7 +6,7 @@ class Bucket extends Tool{
         this.name = 'Bucket';
         this.newPixels = [];
     }
-    MouseDownHandler(e) {
+    mouseDownHandler(e) {
         let indices = this.model.inputToPixelIndex(e.offsetX, e.offsetY);
         if (indices) {
             let pixels = this.model.get("pixels");

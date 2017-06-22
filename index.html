@@ -15,11 +15,18 @@
         </div>
     </div>
 </div>
-</div>
 <div id="List-page" class="page">
-    <div id="list-view" hidden>
+    <div id="list-view">
 
     </div>
+    <script id="roomList-template" type="text/template">
+        <% _.each( rooms, function(room, i ){ %>
+        <div class="room--list flex flex--justify--spacebetween" data-name="<%= i %>">
+            <span><%= i %></span>
+            <span>Users: <%= room.length %></span>
+        </div>
+        <% }); %>
+    </script>
     <div class="flex" id="create-new">
         <label for="newRoomName">New room:</label>
         <input type="text" name="roomName" id="newRoomName" class="flex__item">

@@ -42,11 +42,7 @@ class DataStreamHandler{
         App.events.trigger("sendAllDataToUser", e);
     }
     handleRoomsList(e){
-        let map = new Map();
-        Object.keys(e).forEach(key => {
-            map.set(key, e[key]);
-        });
-        App.events.trigger("updateRooms", map);
+        App.events.trigger("updateRooms", e);
     }
     handleRoomDetail(e){
         App.events.trigger("updateCurrentRoom", e);
@@ -55,7 +51,6 @@ class DataStreamHandler{
         App.events.trigger("changeDimensions", e);
     }
     handleInitData(e){
-        console.log('datastreamhandler init data');
         App.events.trigger("initializeRoomCanvas", e);
     }
 }

@@ -5,7 +5,7 @@ class Eraser extends Tool{
         super(model);
         this.name = 'Eraser';
     };
-    DragHandler(e) {
+    dragHandler(e) {
         let indices = this.model.inputToPixelIndex(e.offsetX, e.offsetY);
         let pixels = this.model.get("pixels");
         if (indices) {

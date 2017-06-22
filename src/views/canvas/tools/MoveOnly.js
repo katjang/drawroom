@@ -5,7 +5,7 @@ class MoveOnly extends Tool{
         super(model);
         this.name = 'Move';
     }
-    DragHandler (e) {
+    dragHandler (e) {
         this.model.reposition(e.offsetX - this.model.get("lastMousePos").x, e.offsetY - this.model.get("lastMousePos").y);
         App.events.trigger("canvasRedraw");
     }

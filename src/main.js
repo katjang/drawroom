@@ -1,4 +1,5 @@
 import $ from "jquery";
+import "babel-polyfill";
 import DrawCanvas from "./views/canvas/DrawCanvas";
 import HelpCanvas from "./views/canvas/HelpCanvas";
 import Chat from "./views/chat/Chat";

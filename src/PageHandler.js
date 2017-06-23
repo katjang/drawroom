@@ -3,9 +3,11 @@ class PageHandler{
         this.pages = new Map();
     }
     goto(name){
-        let promises = Array.from(this.pages.values()).map((obj) => {
-            return obj.hidePage();
-        });
+        let pagesArray = [];
+        for(let [key, value] of this.pages){
+            pagesArray.push(value);
+        }
+        let promises = pagesArray.map((obj) => obj.hidePage());
         Promise.all(promises).then(() => {this.pages.get(name).showPage()});
     }
     addPage(page){

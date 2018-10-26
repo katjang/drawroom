@@ -6,6 +6,7 @@ import Mirror from "./Mirror";
 import Bucket from "./Bucket";
 import {View} from "backbone";
 import _ from "underscore";
+import Line from "./Line";
 
 const Toolbar = View.extend({
     events: {
@@ -15,6 +16,7 @@ const Toolbar = View.extend({
         let tools = this.model.get('tools');
 
         tools.push(new Pencil(this.model));
+        tools.push(new Line(this.model));
         tools.push(new Rectangle(this.model));
         tools.push(new Eraser(this.model));
         tools.push(new MoveOnly(this.model));

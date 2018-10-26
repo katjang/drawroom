@@ -1,4 +1,5 @@
 import Pencil from "./Pencil";
+import Rectangle from "./Rectangle";
 import Eraser from "./Eraser";
 import MoveOnly from "./MoveOnly";
 import Mirror from "./Mirror";
@@ -14,6 +15,7 @@ const Toolbar = View.extend({
         let tools = this.model.get('tools');
 
         tools.push(new Pencil(this.model));
+        tools.push(new Rectangle(this.model));
         tools.push(new Eraser(this.model));
         tools.push(new MoveOnly(this.model));
         tools.push(new Mirror(this.model));

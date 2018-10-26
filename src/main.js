@@ -8,7 +8,7 @@ import SettingMenu from "./views/canvas/settings/SettingMenu";
 import RoomName from "./views/room/RoomName";
 import BackButton from "./views/room/BackButton";
 import UsersInRoomList from "./views/room/UsersInRoomList";
-import RoomPage from "./views/room";
+import RoomPage from "./views/Room";
 import RoomListPage from "./views/RoomsPage";
 import NamePage from "./views/Name";
 

@@ -1,4 +1,5 @@
 import CanvasLayer from "./CanvasLayer";
+import HelpFunctions from "../../HelpFunctions";
 
 const HelpCanvas = CanvasLayer.extend({
     initialize: function () {
@@ -6,6 +7,7 @@ const HelpCanvas = CanvasLayer.extend({
         this.listenTo(this.model, 'change:drawHelpLines', this.canvasRedraw);
         App.events.on("redrawHelpCanvas", () => this.canvasRedraw());
         App.events.on("drawHelpSquare", (e) => this.drawSquare(e));
+        App.events.on("drawHelpLine", (e) => this.drawLine(e));
     },
     canvasRedraw: function () {
         this.clearCanvas();
@@ -69,6 +71,25 @@ const HelpCanvas = CanvasLayer.extend({
         ctx.stroke();
         ctx.closePath();
         this.drawOutlining();
+        if (this.model.get("drawHelpLines")) {
+            this.drawHelpLines();
+        }
+    },
+    drawLine: function(e) {
+        this.clearCanvas();
+        let position = this.model.get("position");
+        let scale = this.model.get("scale");
+        let ctx = this.el.getContext("2d");
+        
+        // The following code is an implementation of Bresenham's line algorithm
+        ctx.beginPath();
+        ctx.fillStyle = e.color;
+        // call helpfunction to get array of 
+        HelpFunctions.plotLine(e.start, e.end).forEach((vector) => {
+            ctx.fillRect(position.x + vector.x * scale, position.y + vector.y * scale, scale, scale);
+        });
+        ctx.closePath();
+
         if (this.model.get("drawHelpLines")) {
             this.drawHelpLines();
         }
